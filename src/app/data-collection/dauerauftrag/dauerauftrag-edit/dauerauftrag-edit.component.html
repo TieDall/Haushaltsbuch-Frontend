@@ -1,1 +1,100 @@
-<p>dauerauftrag-edit works!</p>
+<h2 mat-dialog-title>Dauerauftrag erfassen</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <label>Buchungstyp</label>
+    <mat-radio-group
+      class="radio-group"
+      formControlName="typ"
+      (change)="typChanged($event)"
+    >
+      <mat-radio-button value="einnahme">Einnahme</mat-radio-button>
+      <mat-radio-button value="ausgabe">Ausgabe</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field appearance="outline" class="d-block">
+      <mat-label>Bezeichnung</mat-label>
+      <input
+        matInput
+        placeholder="Bezeichnung"
+        required
+        type="text"
+        formControlName="bezeichnung"
+      />
+      <mat-error *ngIf="this.form.get('bezeichnung').hasError('required')">
+        Bitte ausfüllen.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="d-block">
+      <mat-label>Betrag</mat-label>
+      <input
+        matInput
+        placeholder="Betrag"
+        required
+        type="number"
+        step="0.01"
+        formControlName="betrag"
+      />
+      <mat-icon matSuffix>euro</mat-icon>
+      <mat-error *ngIf="this.form.get('betrag').hasError('required')">
+        Bitte ausfüllen.
+      </mat-error>
+      <mat-error *ngIf="this.form.get('betrag').hasError('min')">
+        Betrag muss größer als 0 sein.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="d-block">
+      <mat-label>Kategorie</mat-label>
+      <mat-select formControlName="kategorie" [compareWith]="compareKategorien">
+        <mat-select-trigger>
+          <mat-icon>{{ this.form.get("kategorie").value?.icon }}</mat-icon
+          >&nbsp;{{ this.form.get("kategorie").value?.bezeichnung }}
+        </mat-select-trigger>
+        <mat-option *ngFor="let item of kategorienSelect" [value]="item">
+          <mat-icon>{{ item.icon }}</mat-icon
+          >{{ item.bezeichnung }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="d-block">
+      <mat-label>Intervall</mat-label>
+      <mat-select
+        formControlName="intervall"
+        [compareWith]="compareIntervall"
+        required
+      >
+        <mat-option *ngFor="let item of intervallSelect" [value]="item.value">
+          {{ item.display }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="d-block">
+      <mat-label>Zeitraum</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input
+          matStartDate
+          placeholder="Start"
+          required
+          formControlName="beginn"
+        />
+        <input matEndDate placeholder="Ende" formControlName="ende" />
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Abbrechen</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="form.invalid"
+    (click)="save()"
+  >
+    Speichern
+  </button>
+</mat-dialog-actions>
