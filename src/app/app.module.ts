@@ -10,6 +10,7 @@ import { DataCollectionModule } from './data-collection/data-collection.module';
 import { AppConfigService } from './shared/services/app-config.service';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 export function initializeApp(appConfig: AppConfigService) {
   return () => appConfig.loadConfig();
@@ -28,7 +29,8 @@ export function initializeApp(appConfig: AppConfigService) {
     ReactiveFormsModule,
 
     SharedModule,
-    DataCollectionModule
+    DataCollectionModule,
+    DashboardModule
   ],
   providers: [
     AppConfigService,

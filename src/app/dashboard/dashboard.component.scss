@@ -1,0 +1,15 @@
+mat-card-content {
+  text-align: center;
+}
+
+mat-card-content mat-icon {
+  font-size: 50px;
+}
+
+.mat-card-link {
+  cursor: pointer;
+}
+
+.mat-card-link:hover {
+  background-color: #f5f5f5;
+}
