@@ -12,6 +12,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatRadioModule,
     MatSelectModule,
     MatTableModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTooltipModule
   ],
   exports: [
     MatButtonModule,
@@ -40,7 +42,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatRadioModule,
     MatSelectModule,
     MatTableModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTooltipModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' }

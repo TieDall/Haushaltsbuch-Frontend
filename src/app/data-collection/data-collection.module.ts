@@ -6,9 +6,10 @@ import { BuchungListComponent } from './buchung/buchung-list/buchung-list.compon
 import { BuchungEditComponent } from './buchung/buchung-edit/buchung-edit.component';
 import { KategorieListComponent } from './kategorie/kategorie-list/kategorie-list.component';
 import { KategorieEditComponent } from './kategorie/kategorie-edit/kategorie-edit.component';
-import { DauerauftragListComponent } from './dauerauftrag/dauerauftrag-list/dauerauftrag-list.component';
 import { DauerauftragEditComponent } from './dauerauftrag/dauerauftrag-edit/dauerauftrag-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DauerauftragGroupedListComponent } from './dauerauftrag/dauerauftrag-grouped-list/dauerauftrag-grouped-list.component';
+import { DauerauftragGroupedEditComponent } from './dauerauftrag/dauerauftrag-grouped-edit/dauerauftrag-grouped-edit.component';
 
 
 
@@ -18,8 +19,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     BuchungEditComponent,
     KategorieListComponent,
     KategorieEditComponent,
-    DauerauftragListComponent,
-    DauerauftragEditComponent
+    DauerauftragEditComponent,
+    DauerauftragGroupedListComponent,
+    DauerauftragGroupedEditComponent
   ],
   imports: [
     CommonModule,
