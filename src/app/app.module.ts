@@ -13,6 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardModule } from './dashboard/dashboard.module';
 import localeDe from '@angular/common/locales/de';
+import { ReportingModule } from './reporting/reporting.module';
 
 registerLocaleData(localeDe);
 
@@ -34,7 +35,8 @@ export function initializeApp(appConfig: AppConfigService) {
 
     SharedModule,
     DataCollectionModule,
-    DashboardModule
+    DashboardModule,
+    ReportingModule
   ],
   providers: [
     AppConfigService,

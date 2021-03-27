@@ -1,0 +1,11 @@
+<div class="row m-2" *ngFor="let item of reports">
+  <button mat-raised-button class="col" routerLink="../report/{{ item.id }}">
+    {{ item.bezeichnung }}
+  </button>
+</div>
+
+<div class="row m-4">
+  <button mat-raised-button class="col" (click)="add()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard.component';
 import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 import { DataCollectionModule } from '../data-collection/data-collection.module';
+import { ReportingModule } from '../reporting/reporting.module';
 
 
 
@@ -13,7 +14,8 @@ import { DataCollectionModule } from '../data-collection/data-collection.module'
     CommonModule,
     RouterModule,
     MaterialModule,
-    DataCollectionModule
+    DataCollectionModule,
+    ReportingModule
   ]
 })
 export class DashboardModule { }

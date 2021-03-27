@@ -27,6 +27,10 @@ const routes: Routes = [
   {
     path: 'konfiguration',
     component: KonfigurationListComponent
+  },
+  {
+    path: 'reporting',
+    loadChildren: () => import('./reporting/reporting.module').then(m => m.ReportingModule)
   }
 ];
 
