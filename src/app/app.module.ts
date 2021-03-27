@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
 
+import { registerLocaleData } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,6 +12,9 @@ import { AppConfigService } from './shared/services/app-config.service';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardModule } from './dashboard/dashboard.module';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localeDe);
 
 export function initializeApp(appConfig: AppConfigService) {
   return () => appConfig.loadConfig();
@@ -38,7 +42,9 @@ export function initializeApp(appConfig: AppConfigService) {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
       deps: [AppConfigService], multi: true
-    }
+    },
+    { provide: LOCALE_ID, useValue: 'de' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: '€' }
   ],
   bootstrap: [AppComponent]
 })
