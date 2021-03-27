@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { DauerauftragGrouped } from 'src/app/shared/models/dauerauftrag-grouped';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { DauerauftragEditComponent } from '../dauerauftrag-edit/dauerauftrag-edit.component';
 import { DauerauftragGroupedEditComponent } from '../dauerauftrag-grouped-edit/dauerauftrag-grouped-edit.component';
 
 @Component({
@@ -39,7 +40,7 @@ export class DauerauftragGroupedListComponent implements OnInit, OnDestroy {
   public create() {
     this.subsciptions.add(
       this.dialog
-        .open(DauerauftragGroupedEditComponent)
+        .open(DauerauftragEditComponent)
         .afterClosed()
         .pipe(
           switchMap(() => this.loadData())
