@@ -10,6 +10,8 @@ import { DauerauftragEditComponent } from './dauerauftrag/dauerauftrag-edit/daue
 import { ReactiveFormsModule } from '@angular/forms';
 import { DauerauftragGroupedListComponent } from './dauerauftrag/dauerauftrag-grouped-list/dauerauftrag-grouped-list.component';
 import { DauerauftragGroupedEditComponent } from './dauerauftrag/dauerauftrag-grouped-edit/dauerauftrag-grouped-edit.component';
+import { KonfigurationListComponent } from './konfiguration/konfiguration-list/konfiguration-list.component';
+import { KonfigurationEditComponent } from './konfiguration/konfiguration-edit/konfiguration-edit.component';
 
 
 
@@ -21,7 +23,9 @@ import { DauerauftragGroupedEditComponent } from './dauerauftrag/dauerauftrag-gr
     KategorieEditComponent,
     DauerauftragEditComponent,
     DauerauftragGroupedListComponent,
-    DauerauftragGroupedEditComponent
+    DauerauftragGroupedEditComponent,
+    KonfigurationListComponent,
+    KonfigurationEditComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,69 @@
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { Konfiguration } from 'src/app/shared/models/konfiguration';
+import { AppConfigService } from 'src/app/shared/services/app-config.service';
+
+@Component({
+  selector: 'app-konfiguration-edit',
+  templateUrl: './konfiguration-edit.component.html',
+  styleUrls: ['./konfiguration-edit.component.scss']
+})
+export class KonfigurationEditComponent implements OnInit, OnDestroy {
+
+  public subscriptions = new Subscription();
+
+  private readonly url = `${AppConfigService.appConfig.apiServer.url}Konfiguration`;
+
+  public form: FormGroup;
+
+  constructor(
+    private readonly formBuilder: FormBuilder,
+    private readonly httpClient: HttpClient,
+    public dialogRef: MatDialogRef<KonfigurationEditComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Konfiguration
+  ) {
+    this.initForm();
+  }
+
+  private initForm() {
+    this.form = this.formBuilder.group({
+      parameter: [
+        {
+          value: this.data?.parameter,
+          disabled: true
+        }
+      ],
+      wert: [
+        {
+          value: this.data?.wert,
+          disabled: false
+        }
+      ]
+    });
+  }
+
+  public save() {
+    this.data.wert = this.form?.value?.wert;
+
+    if (this.data?.id) {
+      this.httpClient
+        .put(this.url + '/' + this.data.id, this.data)
+        .subscribe(() => this.dialogRef.close());
+    } else {
+      this.httpClient
+        .post(this.url, this.data)
+        .subscribe(() => this.dialogRef.close());
+    }
+  }
+
+  public ngOnInit(): void {
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+}

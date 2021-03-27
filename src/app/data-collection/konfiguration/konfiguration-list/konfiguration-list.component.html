@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col">
+    <table mat-table [dataSource]="data">
+      <ng-container matColumnDef="parameter">
+        <th mat-header-cell *matHeaderCellDef>Parameter</th>
+        <td mat-cell *matCellDef="let element" (click)="edit(element)">
+          {{ element.parameter }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="wert">
+        <th mat-header-cell *matHeaderCellDef>Wert</th>
+        <td mat-cell *matCellDef="let element" (click)="edit(element)">
+          {{ element.wert }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef align="right"></th>
+        <td mat-cell *matCellDef="let element" align="right">
+          <mat-icon (click)="edit(element)">edit</mat-icon>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  </div>
+</div>

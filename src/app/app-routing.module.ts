@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BuchungListComponent } from './data-collection/buchung/buchung-list/buchung-list.component';
 import { DauerauftragGroupedListComponent } from './data-collection/dauerauftrag/dauerauftrag-grouped-list/dauerauftrag-grouped-list.component';
 import { KategorieListComponent } from './data-collection/kategorie/kategorie-list/kategorie-list.component';
+import { KonfigurationListComponent } from './data-collection/konfiguration/konfiguration-list/konfiguration-list.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'dauerauftrag',
     component: DauerauftragGroupedListComponent
+  },
+  {
+    path: 'konfiguration',
+    component: KonfigurationListComponent
   }
 ];
 
