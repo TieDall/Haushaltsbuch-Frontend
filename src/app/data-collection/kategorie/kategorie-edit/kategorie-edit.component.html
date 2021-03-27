@@ -1,1 +1,43 @@
-<p>kategorie-edit works!</p>
+<h2 mat-dialog-title>
+  Kategorie {{ this.data?.id ? "bearbeiten" : "erfassen" }}
+</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" class="d-block">
+      <mat-label>Bezeichnung</mat-label>
+      <input
+        matInput
+        placeholder="Bezeichnung"
+        required
+        type="text"
+        formControlName="bezeichnung"
+      />
+      <mat-error *ngIf="this.form.get('bezeichnung').hasError('required')">
+        Bitte ausfüllen.
+      </mat-error>
+    </mat-form-field>
+
+    <label>Buchungstyp</label>
+    <mat-radio-group class="radio-group" formControlName="typ">
+      <mat-radio-button value="einnahme">Einnahme</mat-radio-button>
+      <mat-radio-button value="ausgabe">Ausgabe</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field appearance="outline" class="d-block">
+      <mat-label>Icon</mat-label>
+      <input matInput placeholder="Icon" type="text" formControlName="icon" />
+      <mat-icon matSuffix>{{ this.form.get("icon").value }}</mat-icon>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Abbrechen</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="form.invalid"
+    (click)="save()"
+  >
+    Speichern
+  </button>
+</mat-dialog-actions>

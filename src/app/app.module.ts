@@ -9,6 +9,7 @@ import { MaterialModule } from './material.module';
 import { DataCollectionModule } from './data-collection/data-collection.module';
 import { AppConfigService } from './shared/services/app-config.service';
 import { SharedModule } from './shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export function initializeApp(appConfig: AppConfigService) {
   return () => appConfig.loadConfig();
@@ -24,6 +25,8 @@ export function initializeApp(appConfig: AppConfigService) {
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
+    ReactiveFormsModule,
+
     SharedModule,
     DataCollectionModule
   ],

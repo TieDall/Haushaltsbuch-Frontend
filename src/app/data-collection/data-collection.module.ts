@@ -8,6 +8,7 @@ import { KategorieListComponent } from './kategorie/kategorie-list/kategorie-lis
 import { KategorieEditComponent } from './kategorie/kategorie-edit/kategorie-edit.component';
 import { DauerauftragListComponent } from './dauerauftrag/dauerauftrag-list/dauerauftrag-list.component';
 import { DauerauftragEditComponent } from './dauerauftrag/dauerauftrag-edit/dauerauftrag-edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -23,7 +24,8 @@ import { DauerauftragEditComponent } from './dauerauftrag/dauerauftrag-edit/daue
   imports: [
     CommonModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
 export class DataCollectionModule { }
