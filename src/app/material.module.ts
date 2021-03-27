@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -23,6 +24,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatMenuModule,
     MatNativeDateModule,
     MatRadioModule,
+    MatSelectModule,
     MatTableModule,
     MatToolbarModule
   ],
@@ -36,6 +38,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatMenuModule,
     MatNativeDateModule,
     MatRadioModule,
+    MatSelectModule,
     MatTableModule,
     MatToolbarModule
   ],
