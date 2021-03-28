@@ -1,3 +1,37 @@
 <h2 mat-dialog-title>Widgetauswahl</h2>
 
-<mat-dialog-content> </mat-dialog-content>
+<mat-dialog-content>
+  <h2>Steuerelemente</h2>
+
+  <div class="row">
+    <mat-card class="col m-2 mat-card-link" (click)="save(1)">
+      <mat-card-header>
+        <mat-card-title>Monatsauswahl</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-icon>calendar_today</mat-icon>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <h2>Graphen</h2>
+
+  <div class="row">
+    <mat-card class="col m-2 mat-card-link" (click)="save(2)">
+      <mat-card-header>
+        <mat-card-title>Bilanz</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-icon>money</mat-icon>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="col m-2 mat-card-link" (click)="save(3)">
+      <mat-card-header>
+        <mat-card-title>Ausgabenverteilung</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-icon>money</mat-icon>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</mat-dialog-content>

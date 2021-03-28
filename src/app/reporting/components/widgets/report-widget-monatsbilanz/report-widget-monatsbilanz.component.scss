@@ -1,0 +1,72 @@
+div {
+  font-size: 1rem;
+}
+
+.einnahmen {
+  background-color: #e9f7ef;
+  > div:nth-child(2) {
+    color: #196f3d;
+    text-align: right;
+    font-weight: bold;
+  }
+}
+.einnahmen-var {
+  background-color: #e9f7ef;
+  > div:nth-child(2) {
+    color: #52be80;
+    text-align: right;
+    font-weight: bold;
+  }
+}
+.einnahmen-fix {
+  background-color: #e9f7ef;
+  > div:nth-child(2) {
+    color: #229954;
+    text-align: right;
+    font-weight: bold;
+  }
+}
+
+.ausgaben {
+  background-color: #f9ebea;
+  > div:nth-child(2) {
+    color: #7b241c;
+    text-align: right;
+    font-weight: bold;
+  }
+}
+.ausgaben-var {
+  background-color: #f9ebea;
+  > div:nth-child(2) {
+    color: #cd6155;
+    text-align: right;
+    font-weight: bold;
+  }
+}
+.ausgaben-fix {
+  background-color: #f9ebea;
+  > div:nth-child(2) {
+    color: #a93226;
+    text-align: right;
+    font-weight: bold;
+  }
+}
+
+.bilanz {
+  background-color: #f8f9f9;
+  > div:nth-child(2) {
+    text-align: right;
+    font-weight: bold;
+  }
+}
+
+.data {
+  padding: 30px;
+
+  > div {
+    padding: 5px;
+  }
+}
+.graph {
+  margin: auto;
+}

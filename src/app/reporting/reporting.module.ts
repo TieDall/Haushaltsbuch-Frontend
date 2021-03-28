@@ -13,6 +13,9 @@ import { ReportRowDialogComponent } from './components/report-row-dialog/report-
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReportItemDialogComponent } from './components/report-item-dialog/report-item-dialog.component';
 import { ReportCreateDialogComponent } from './components/report-create-dialog/report-create-dialog.component';
+import { ReportWidgetMonatsbilanzComponent } from './components/widgets/report-widget-monatsbilanz/report-widget-monatsbilanz.component';
+import { ReportWidgetMonatsausgabenComponent } from './components/widgets/report-widget-monatsausgaben/report-widget-monatsausgaben.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 
 
@@ -25,7 +28,9 @@ import { ReportCreateDialogComponent } from './components/report-create-dialog/r
     ReportEditComponent,
     ReportRowDialogComponent,
     ReportItemDialogComponent,
-    ReportCreateDialogComponent
+    ReportCreateDialogComponent,
+    ReportWidgetMonatsbilanzComponent,
+    ReportWidgetMonatsausgabenComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +38,12 @@ import { ReportCreateDialogComponent } from './components/report-create-dialog/r
     RouterModule,
     ReportingRoutingModule,
     SharedModule,
-    MaterialModule
+    MaterialModule,
+
+    // NgxEchartsModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
   ],
   exports: [
     ReportOverviewComponent

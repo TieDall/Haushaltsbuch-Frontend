@@ -1,0 +1,20 @@
+table {
+  width: 100%;
+}
+tr {
+  border-bottom: 1px solid black;
+  :last-child {
+    border-bottom: none;
+  }
+}
+
+.data {
+  padding: 30px;
+
+  > div {
+    padding: 5px;
+  }
+}
+.graph {
+  margin: auto;
+}

@@ -1,0 +1,42 @@
+<mat-card class="col-md col-sm-12 col-xs-12">
+  <mat-card-header>
+    <mat-card-title>Bilanz</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <div class="data col-md col-sm-12 col-xs-12">
+        <div class="row einnahmen">
+          <div class="col"><span>Einnahmen:</span></div>
+          <div class="col">{{ einnahmen | currency }}</div>
+        </div>
+        <div class="row einnahmen-fix">
+          <div class="col"><span>fixe Einnahmen:</span></div>
+          <div class="col">{{ einnahmenFix | currency }}</div>
+        </div>
+        <div class="row einnahmen-var">
+          <div class="col"><span>variable Einnahmen:</span></div>
+          <div class="col">{{ einnahmenVar | currency }}</div>
+        </div>
+        <div class="row ausgaben">
+          <div class="col"><span>Ausgaben:</span></div>
+          <div class="col">{{ ausgaben | currency }}</div>
+        </div>
+        <div class="row ausgaben-fix">
+          <div class="col"><span>fixe Ausgaben:</span></div>
+          <div class="col">{{ ausgabenFix | currency }}</div>
+        </div>
+        <div class="row ausgaben-var">
+          <div class="col"><span>variable Ausgaben:</span></div>
+          <div class="col">{{ ausgabenVar | currency }}</div>
+        </div>
+        <div class="row bilanz">
+          <div class="col"><span>Bilanz:</span></div>
+          <div class="col">{{ bilanz | currency }}</div>
+        </div>
+      </div>
+      <div class="graph col-md col-sm-12 col-xs-12">
+        <div echarts [options]="chartOptions"></div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
