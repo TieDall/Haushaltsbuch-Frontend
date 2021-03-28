@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 import { Report } from 'src/app/shared/models/report';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { ReportCreateDialogComponent } from '../report-create-dialog/report-create-dialog.component';
@@ -20,6 +20,8 @@ export class ReportOverviewComponent implements OnInit, OnDestroy {
 
   public reports: Report[] = [];
 
+  public loaded = false;
+
   constructor(
     private readonly httpClient: HttpClient,
     private readonly matDialog: MatDialog
@@ -28,7 +30,8 @@ export class ReportOverviewComponent implements OnInit, OnDestroy {
   private loadData(): Observable<any> {
     return this.httpClient.get<Report[]>(this.url)
       .pipe(
-        tap((x: Report[]) => this.reports = x)
+        tap((x: Report[]) => this.reports = x),
+        finalize(() => this.loaded = true)
       );
   }
 
