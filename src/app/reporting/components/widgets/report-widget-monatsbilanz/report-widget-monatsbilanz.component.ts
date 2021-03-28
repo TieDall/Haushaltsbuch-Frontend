@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import * as moment from 'moment';
 import { Observable, Subscription, zip } from 'rxjs';
-import { tap, switchMap } from 'rxjs/operators';
+import { tap, switchMap, finalize } from 'rxjs/operators';
 import { ReportMonthService } from 'src/app/reporting/services/report-month.service';
 import { Buchung } from 'src/app/shared/models/buchung';
 import { Dauerauftrag } from 'src/app/shared/models/dauerauftrag';
@@ -15,6 +15,8 @@ import { AppConfigService } from 'src/app/shared/services/app-config.service';
   styleUrls: ['./report-widget-monatsbilanz.component.scss']
 })
 export class ReportWidgetMonatsbilanzComponent implements OnInit, OnDestroy {
+
+  @Output() loaded = new EventEmitter<boolean>();
 
   private readonly subscriptions = new Subscription();
 
@@ -53,7 +55,8 @@ export class ReportWidgetMonatsbilanzComponent implements OnInit, OnDestroy {
         this.einnahmen = this.einnahmenFix + this.einnahmenVar;
         this.ausgaben = this.ausgabenFix + this.ausgabenVar;
         this.bilanz = this.einnahmen - this.ausgaben;
-      }))
+      }),
+      finalize(() => this.loaded.emit(true)));
   }
 
   private setGraph(einnahmenFix: number, einnahmenVar: number, ausgabenFix: number, ausgabenVar: number) {
@@ -128,6 +131,7 @@ export class ReportWidgetMonatsbilanzComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.loaded.emit(false);
     this.subscriptions.add(
       this.loadData(moment().month() + 1, moment().year())
         .pipe(

@@ -1,11 +1,17 @@
+<div *ngIf="!loaded" class="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+
 <ng-container [ngSwitch]="reportWidget">
   <app-report-widget-monatsauswahl
     *ngSwitchCase="1"
   ></app-report-widget-monatsauswahl>
   <app-report-widget-monatsbilanz
+    (loaded)="loadedEvent($event)"
     *ngSwitchCase="2"
   ></app-report-widget-monatsbilanz>
   <app-report-widget-monatsausgaben
+    (loaded)="loadedEvent($event)"
     *ngSwitchCase="3"
   ></app-report-widget-monatsausgaben>
 </ng-container>

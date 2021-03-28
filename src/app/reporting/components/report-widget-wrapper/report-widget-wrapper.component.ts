@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { ReportWidget } from 'src/app/shared/models/report-widget';
 
 @Component({
@@ -10,7 +11,13 @@ export class ReportWidgetWrapperComponent implements OnInit {
 
   @Input() reportWidget: ReportWidget;
 
+  public loaded = true;
+
   constructor() { }
+
+  public loadedEvent(loaded: boolean) {
+    this.loaded = loaded;
+  }
 
   ngOnInit(): void {
   }
