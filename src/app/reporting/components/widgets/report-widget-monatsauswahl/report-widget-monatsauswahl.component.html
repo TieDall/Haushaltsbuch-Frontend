@@ -1,0 +1,37 @@
+<mat-card class="col-md col-sm-12 col-xs-12">
+  <mat-card-content>
+    <div class="row">
+      <div class="col" align="center">
+        <h2>{{ this.currentMonth }} / {{ this.currentYear }}</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col" align="center">
+        <button mat-raised-button color="primary" (click)="loadBefore()">
+          <mat-icon>navigate_before</mat-icon>
+        </button>
+        <mat-form-field style="width: 0px; visibility: hidden">
+          <input matInput [matDatepicker]="picker" />
+          <mat-datepicker
+            #picker
+            startView="multi-year"
+            (monthSelected)="chosenMonthHandler($event, picker)"
+          >
+          </mat-datepicker>
+        </mat-form-field>
+        <button
+          class="m-1"
+          mat-raised-button
+          color="primary"
+          (click)="picker.open()"
+        >
+          Monat auswählen
+        </button>
+        <button mat-raised-button color="primary" (click)="loadNext()">
+          <mat-icon>navigate_next</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

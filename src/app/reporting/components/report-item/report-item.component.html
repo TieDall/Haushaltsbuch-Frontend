@@ -1,0 +1,18 @@
+<h2>
+  {{ this.report.bezeichnung }}
+  <mat-icon [routerLink]="['/report/edit/', this.report.id]">edit</mat-icon>
+</h2>
+
+<div
+  class="row app-border report-row"
+  *ngFor="let reportRow of this.report.reportRows"
+>
+  <div class="col" *ngFor="let reportItem of reportRow.reportItems">
+    <div *ngIf="reportItem?.reportWidget">
+      <app-report-widget-wrapper
+        class="m-1"
+        [reportWidget]="reportItem.reportWidget"
+      ></app-report-widget-wrapper>
+    </div>
+  </div>
+</div>

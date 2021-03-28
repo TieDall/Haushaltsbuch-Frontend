@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Report } from '../shared/models/report';
-import { AppConfigService } from '../shared/services/app-config.service';
+import { Report } from '../../shared/models/report';
+import { AppConfigService } from '../../shared/services/app-config.service';
 
 @Injectable({ providedIn: 'root' })
 export class ReportResolver implements Resolve<any> {

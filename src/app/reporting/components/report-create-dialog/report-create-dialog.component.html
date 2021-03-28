@@ -1,0 +1,28 @@
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" class="d-block">
+      <mat-label>Bezeichnung</mat-label>
+      <input
+        matInput
+        placeholder="Bezeichnung"
+        required
+        type="text"
+        formControlName="bezeichnung"
+      />
+      <mat-error *ngIf="this.form.get('bezeichnung').hasError('required')">
+        Bitte ausfüllen.
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="form.invalid"
+    (click)="save()"
+  >
+    <mat-icon>save</mat-icon>Speichern
+  </button>
+</mat-dialog-actions>

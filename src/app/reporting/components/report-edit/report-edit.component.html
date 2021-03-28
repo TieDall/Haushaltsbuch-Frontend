@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col">
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline" class="d-block" appearance="fill">
+        <mat-label>Bezeichnung</mat-label>
+        <input
+          matInput
+          placeholder="Bezeichnung"
+          required
+          type="text"
+          formControlName="bezeichnung"
+        />
+        <mat-error *ngIf="this.form.get('bezeichnung').hasError('required')">
+          Bitte ausfüllen.
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <div class="col" align="end">
+    <button mat-raised-button (click)="save()">
+      <mat-icon>save</mat-icon> Speichern
+    </button>
+  </div>
+</div>
+
+<div
+  class="row app-border report-row"
+  *ngFor="let reportRow of this.report.reportRows"
+>
+  <div class="col" *ngFor="let reportItem of reportRow.reportItems">
+    <div *ngIf="reportItem?.reportWidget">
+      <app-report-widget-wrapper
+        class="m-1"
+        [reportWidget]="reportItem.reportWidget"
+      ></app-report-widget-wrapper>
+      <div class="app-edit-icon" (click)="editItem(reportItem)">
+        <mat-icon>edit</mat-icon>
+      </div>
+    </div>
+    <div
+      *ngIf="!reportItem?.reportWidget"
+      class="placeholder"
+      (click)="editItem(reportItem)"
+    >
+      <mat-icon>edit</mat-icon>
+    </div>
+  </div>
+  <div class="app-delete-icon" (click)="deleteRow(reportRow)">
+    <mat-icon>delete</mat-icon>
+  </div>
+</div>
+
+<div class="row">
+  <button mat-raised-button class="col m-3" (click)="addRow()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

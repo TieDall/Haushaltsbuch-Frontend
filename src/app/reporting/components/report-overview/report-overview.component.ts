@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { Report } from 'src/app/shared/models/report';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { ReportCreateDialogComponent } from '../report-create-dialog/report-create-dialog.component';
 
 @Component({
   selector: 'app-report-overview',
@@ -32,13 +33,13 @@ export class ReportOverviewComponent implements OnInit, OnDestroy {
   }
 
   public add() {
-    // TODO
-    // const dialogRef = this.matDialog.open(ReportNewDialogComponent);
-    // dialogRef.afterClosed()
-    //   .pipe(
-    //     switchMap(() => this.loadData())
-    //   )
-    //   .subscribe();
+    const dialogRef = this.matDialog.open(ReportCreateDialogComponent);
+    this.subscriptions.add(
+      dialogRef.afterClosed()
+        .pipe(
+          switchMap(() => this.loadData())
+        )
+        .subscribe());
   }
 
   public ngOnInit(): void {

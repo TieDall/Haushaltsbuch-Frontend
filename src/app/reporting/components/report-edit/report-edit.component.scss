@@ -1,0 +1,53 @@
+.app-border {
+  border: 1px dashed black;
+  border-radius: 5px;
+}
+
+.report-row {
+  margin: 10px;
+  padding: 10px;
+
+  background-color: lightgray;
+}
+
+.placeholder {
+  border: 1px dashed black;
+  border-radius: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 150px;
+
+  background-color: #e7e7e7;
+
+  cursor: pointer;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: white !important;
+}
+
+.app-edit-icon {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  background-color: grey;
+  padding: 10px;
+  border-radius: 100px;
+  height: 44px;
+  width: 44px;
+  color: white;
+  cursor: pointer;
+}
+
+.app-delete-icon {
+  background-color: grey;
+  padding: 8px;
+  border-radius: 100px;
+  height: 40px;
+  width: 40px;
+  color: white;
+  cursor: pointer;
+}
