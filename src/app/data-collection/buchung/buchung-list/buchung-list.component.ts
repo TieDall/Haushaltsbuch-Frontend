@@ -4,7 +4,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 import { Buchung } from 'src/app/shared/models/buchung';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { BtnBuchungService } from 'src/app/shared/services/btn-buchung.service';
@@ -27,6 +27,8 @@ export class BuchungListComponent implements OnInit, OnDestroy {
   public currentMonth: number;
   public currentYear: number;
 
+  public loaded = false;
+
   constructor(
     private readonly httpClient: HttpClient,
     private readonly dialog: MatDialog,
@@ -42,11 +44,13 @@ export class BuchungListComponent implements OnInit, OnDestroy {
   }
 
   private loadData(year: number, month: number): Observable<Buchung[]> {
+    this.loaded = false;
     return this.httpClient.get<Buchung[]>(`${this.url}/GetBuchungenByMonth/${year}/${month}`)
       .pipe(
         tap((buchungen: Buchung[]) => {
           this.data = buchungen.sort((a, b) => new Date(b.buchungstag).getTime() - new Date(a.buchungstag).getTime())
-        })
+        }),
+        finalize(() => this.loaded = true)
       );
   }
 
