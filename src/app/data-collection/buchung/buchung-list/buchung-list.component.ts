@@ -7,6 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { Buchung } from 'src/app/shared/models/buchung';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { BtnBuchungService } from 'src/app/shared/services/btn-buchung.service';
 import { BuchungEditComponent } from '../buchung-edit/buchung-edit.component';
 
 @Component({
@@ -28,7 +29,8 @@ export class BuchungListComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly btnBuchungService: BtnBuchungService
   ) {
     this.initDate();
   }
@@ -118,6 +120,14 @@ export class BuchungListComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.subscriptions.add(
+      this.btnBuchungService.subject
+        .pipe(
+          switchMap(() => this.loadData(this.currentYear, this.currentMonth))
+        )
+        .subscribe()
+    );
+
     this.subscriptions.add(
       this.loadData(this.currentYear, this.currentMonth).subscribe()
     );

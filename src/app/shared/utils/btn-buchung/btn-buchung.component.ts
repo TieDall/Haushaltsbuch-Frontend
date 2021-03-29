@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { BuchungEditComponent } from 'src/app/data-collection/buchung/buchung-edit/buchung-edit.component';
+import { BtnBuchungService } from '../../services/btn-buchung.service';
 
 @Component({
   selector: 'app-btn-buchung',
@@ -13,7 +15,8 @@ export class BtnBuchungComponent implements OnInit, OnDestroy {
   private readonly subscriptions = new Subscription();
 
   constructor(
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly btnBuchungService: BtnBuchungService
   ) { }
 
   public openDialog() {
@@ -25,6 +28,9 @@ export class BtnBuchungComponent implements OnInit, OnDestroy {
             width: '500px'
           })
         .afterClosed()
+        .pipe(
+          tap(() => this.btnBuchungService.subject.next(true))
+        )
         .subscribe());
   }
 
