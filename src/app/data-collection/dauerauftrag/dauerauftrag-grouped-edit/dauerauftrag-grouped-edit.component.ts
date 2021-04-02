@@ -18,7 +18,7 @@ export class DauerauftragGroupedEditComponent implements OnInit, OnDestroy {
 
   public subscriptions = new Subscription();
 
-  public readonly url = `${AppConfigService.appConfig.apiServer.url}Dauerauftrag/GetDauerauftragByGrouped`;
+  public readonly url = `${AppConfigService.appConfig.apiServer.url}Dauerauftrag/GetDauerauftraege`;
   public readonly urlDelete = `${AppConfigService.appConfig.apiServer.url}Dauerauftrag`;
 
   public tableData: Dauerauftrag[] = [];
