@@ -16,6 +16,7 @@ import { ReportCreateDialogComponent } from './components/report-create-dialog/r
 import { ReportWidgetMonatsbilanzComponent } from './components/widgets/report-widget-monatsbilanz/report-widget-monatsbilanz.component';
 import { ReportWidgetMonatsausgabenComponent } from './components/widgets/report-widget-monatsausgaben/report-widget-monatsausgaben.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { ReportStopEditingDialogComponent } from './components/report-stop-editing-dialog/report-stop-editing-dialog.component';
 
 
 
@@ -30,7 +31,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     ReportItemDialogComponent,
     ReportCreateDialogComponent,
     ReportWidgetMonatsbilanzComponent,
-    ReportWidgetMonatsausgabenComponent
+    ReportWidgetMonatsausgabenComponent,
+    ReportStopEditingDialogComponent
   ],
   imports: [
     CommonModule,

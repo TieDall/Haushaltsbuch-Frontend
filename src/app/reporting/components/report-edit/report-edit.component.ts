@@ -2,8 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Report } from 'src/app/shared/models/report';
 import { ReportItem } from 'src/app/shared/models/report-item';
 import { ReportRow } from 'src/app/shared/models/report-row';
@@ -11,6 +13,7 @@ import { ReportWidget } from 'src/app/shared/models/report-widget';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { ReportItemDialogComponent } from '../report-item-dialog/report-item-dialog.component';
 import { ReportRowDialogComponent } from '../report-row-dialog/report-row-dialog.component';
+import { ReportStopEditingDialogComponent } from '../report-stop-editing-dialog/report-stop-editing-dialog.component';
 
 @Component({
   selector: 'app-report-edit',
@@ -31,7 +34,9 @@ export class ReportEditComponent implements OnInit, OnDestroy {
     private readonly activatedRoute: ActivatedRoute,
     private readonly formBuilder: FormBuilder,
     private readonly matDialog: MatDialog,
-    private readonly httpClient: HttpClient
+    private readonly httpClient: HttpClient,
+    private readonly router: Router,
+    private readonly snackBar: MatSnackBar
   ) {
     this.report = this.activatedRoute.snapshot.data.report as Report;
 
@@ -45,7 +50,20 @@ export class ReportEditComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.httpClient
         .put(`${this.url}/${this.report.id}`, this.report)
-        .subscribe());
+        .subscribe(() => {
+          this.snackBar.open('Speichern erfolgreich.', 'Okay', {
+            duration: 5000
+          });
+        }));
+  }
+
+  public close() {
+    this.matDialog.open(ReportStopEditingDialogComponent).afterClosed()
+      .subscribe((result: boolean) => {
+        if (result) {
+          this.router.navigate(['/report/', this.report.id]);
+        }
+      });
   }
 
   public addRow() {
