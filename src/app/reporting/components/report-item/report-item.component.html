@@ -1,7 +1,22 @@
-<h2>
-  {{ this.report.bezeichnung }}
-  <mat-icon [routerLink]="['/report/edit/', this.report.id]">edit</mat-icon>
-</h2>
+<div class="report-header">
+  <h2>
+    {{ this.report.bezeichnung }}
+  </h2>
+  <span>
+    <button
+      mat-raised-button
+      class="m-1"
+      [routerLink]="['/report/edit/', this.report.id]"
+    >
+      Bearbeiten
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-raised-button class="m-1" (click)="delete()">
+      Löschen
+      <mat-icon>delete</mat-icon>
+    </button>
+  </span>
+</div>
 
 <div
   class="row app-border report-row"

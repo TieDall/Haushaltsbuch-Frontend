@@ -35,7 +35,7 @@ export class ReportCreateDialogComponent implements OnInit, OnDestroy {
   public save() {
     this.subscriptions.add(
       this.httpClient
-        .post(this.url, this.form.value)
+        .post(`${this.url}/${this.form.value.bezeichnung}`, null)
         .subscribe(() => this.dialogRef.close()));
   }
 
