@@ -1,7 +1,7 @@
-<h2 mat-dialog-title>Widgetauswahl</h2>
+<h2 mat-dialog-title>Wählen Sie ein Widget.</h2>
 
 <mat-dialog-content>
-  <h2>Steuerelemente</h2>
+  <h3>Steuerelemente</h3>
 
   <div class="row">
     <mat-card class="col m-2 mat-card-link" (click)="save(1)">
@@ -14,23 +14,45 @@
     </mat-card>
   </div>
 
-  <h2>Graphen</h2>
+  <h3>Graphen</h3>
 
   <div class="row">
     <mat-card class="col m-2 mat-card-link" (click)="save(2)">
       <mat-card-header>
-        <mat-card-title>Bilanz</mat-card-title>
+        <mat-card-title>Bilanz (Monat)</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <mat-icon>money</mat-icon>
+        <mat-icon>bar_chart</mat-icon>
       </mat-card-content>
     </mat-card>
     <mat-card class="col m-2 mat-card-link" (click)="save(3)">
       <mat-card-header>
-        <mat-card-title>Ausgabenverteilung</mat-card-title>
+        <mat-card-title>Ausgabenverteilung (Monat)</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <mat-icon>money</mat-icon>
+        <mat-icon>donut_large</mat-icon>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <h3>Listen</h3>
+
+  <div class="row">
+    <mat-card class="col m-2 mat-card-link" (click)="save(4)">
+      <mat-card-header>
+        <mat-card-title>Daueraufträge (Monat)</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-icon>table_chart</mat-icon>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="col m-2 mat-card-link" (click)="save(5)">
+      <mat-card-header>
+        <mat-card-title>Buchungen (Monat)</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-icon>table_chart</mat-icon>
       </mat-card-content>
     </mat-card>
   </div>
