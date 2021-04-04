@@ -1,5 +1,5 @@
 {
   "apiServer": {
-    "url": "http://192.168.198.35:44304/api/"
+    "url": "http://localhost:44304/api/"
   }
 }
