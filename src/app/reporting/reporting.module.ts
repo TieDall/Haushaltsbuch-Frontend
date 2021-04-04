@@ -19,6 +19,10 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { ReportStopEditingDialogComponent } from './components/report-stop-editing-dialog/report-stop-editing-dialog.component';
 import { ReportWidgetMonatsdauerauftraegeComponent } from './components/widgets/report-widget-monatsdauerauftraege/report-widget-monatsdauerauftraege.component';
 import { ReportWidgetMonatsbuchungenComponent } from './components/widgets/report-widget-monatsbuchungen/report-widget-monatsbuchungen.component';
+import { ReportWidgetVermoegenComponent } from './components/widgets/report-widget-vermoegen/report-widget-vermoegen.component';
+import { ReportWidgetEntwicklungVermoegenComponent } from './components/widgets/report-widget-entwicklung-vermoegen/report-widget-entwicklung-vermoegen.component';
+import { ReportWidgetEntwicklungBilanzComponent } from './components/widgets/report-widget-entwicklung-bilanz/report-widget-entwicklung-bilanz.component';
+import { ReportWidgetEntwicklungVermoegenBilanzComponent } from './components/widgets/report-widget-entwicklung-vermoegen-bilanz/report-widget-entwicklung-vermoegen-bilanz.component';
 
 
 
@@ -36,7 +40,11 @@ import { ReportWidgetMonatsbuchungenComponent } from './components/widgets/repor
     ReportWidgetMonatsausgabenComponent,
     ReportStopEditingDialogComponent,
     ReportWidgetMonatsdauerauftraegeComponent,
-    ReportWidgetMonatsbuchungenComponent
+    ReportWidgetMonatsbuchungenComponent,
+    ReportWidgetVermoegenComponent,
+    ReportWidgetEntwicklungVermoegenComponent,
+    ReportWidgetEntwicklungBilanzComponent,
+    ReportWidgetEntwicklungVermoegenBilanzComponent
   ],
   imports: [
     CommonModule,

@@ -33,6 +33,30 @@
         <mat-icon>donut_large</mat-icon>
       </mat-card-content>
     </mat-card>
+    <mat-card class="col m-2 mat-card-link" (click)="save(7)">
+      <mat-card-header>
+        <mat-card-title>Entwicklung Bilanz</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-icon>show_chart</mat-icon>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="col m-2 mat-card-link" (click)="save(8)">
+      <mat-card-header>
+        <mat-card-title>Entwicklung Vermögen</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-icon>show_chart</mat-icon>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="col m-2 mat-card-link" (click)="save(9)">
+      <mat-card-header>
+        <mat-card-title>Entwicklung Bilanz / Vermögen</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-icon>stacked_line_chart</mat-icon>
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <h3>Listen</h3>
@@ -53,6 +77,19 @@
       </mat-card-header>
       <mat-card-content>
         <mat-icon>table_chart</mat-icon>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <h3>Listen</h3>
+
+  <div class="row">
+    <mat-card class="col m-2 mat-card-link" (click)="save(6)">
+      <mat-card-header>
+        <mat-card-title>Aktuelles Vermögen</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-icon>money</mat-icon>
       </mat-card-content>
     </mat-card>
   </div>
