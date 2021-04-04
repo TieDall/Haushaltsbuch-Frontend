@@ -106,7 +106,7 @@ export class ReportWidgetMonatsausgabenComponent implements OnInit, OnDestroy {
               .reduce((acc, cur) => acc + cur.betrag, 0);
           }
 
-          if (this.fixeChecked && (dauerauftraege as Dauerauftrag[]).some(x => x.kategorie.bezeichnung == kategorie)) {
+          if (this.fixeChecked && (dauerauftraege as Dauerauftrag[]).some(x => x.kategorie.bezeichnung === kategorie)) {
             newDataItem.icon = (dauerauftraege as Dauerauftrag[])
               .filter(x => x.kategorie.bezeichnung === kategorie && !x.isEinnahme)[0].kategorie.icon;
             newDataItem.summe += (dauerauftraege as Dauerauftrag[])

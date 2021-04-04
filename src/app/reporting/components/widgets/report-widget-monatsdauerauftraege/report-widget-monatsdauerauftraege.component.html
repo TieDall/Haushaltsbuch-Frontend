@@ -3,6 +3,27 @@
     <mat-card-title>Daueraufträge</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div class="row"></div>
+    <table mat-table [dataSource]="data">
+      <ng-container matColumnDef="bezeichnung">
+        <th mat-header-cell *matHeaderCellDef>Bezeichnung</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.bezeichnung }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="betrag">
+        <th mat-header-cell *matHeaderCellDef>Betrag</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          align="center"
+          [ngClass]="element.isEinnahme ? 'einnahme' : 'ausgabe'"
+        >
+          {{ element.isEinnahme ? "" : "-" }}{{ element.betrag | currency }}
+        </td>
+      </ng-container>
+
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
   </mat-card-content>
 </mat-card>
