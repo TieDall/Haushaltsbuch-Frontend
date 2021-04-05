@@ -12,6 +12,8 @@ import { DauerauftragGroupedListComponent } from './dauerauftrag/dauerauftrag-gr
 import { DauerauftragGroupedEditComponent } from './dauerauftrag/dauerauftrag-grouped-edit/dauerauftrag-grouped-edit.component';
 import { KonfigurationListComponent } from './konfiguration/konfiguration-list/konfiguration-list.component';
 import { KonfigurationEditComponent } from './konfiguration/konfiguration-edit/konfiguration-edit.component';
+import { GutscheinListComponent } from './gutschein/gutschein-list/gutschein-list.component';
+import { GutscheinEditComponent } from './gutschein/gutschein-edit/gutschein-edit.component';
 
 
 
@@ -25,7 +27,9 @@ import { KonfigurationEditComponent } from './konfiguration/konfiguration-edit/k
     DauerauftragGroupedListComponent,
     DauerauftragGroupedEditComponent,
     KonfigurationListComponent,
-    KonfigurationEditComponent
+    KonfigurationEditComponent,
+    GutscheinListComponent,
+    GutscheinEditComponent
   ],
   imports: [
     CommonModule,

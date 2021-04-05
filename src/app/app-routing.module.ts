@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BuchungListComponent } from './data-collection/buchung/buchung-list/buchung-list.component';
 import { DauerauftragGroupedListComponent } from './data-collection/dauerauftrag/dauerauftrag-grouped-list/dauerauftrag-grouped-list.component';
+import { GutscheinListComponent } from './data-collection/gutschein/gutschein-list/gutschein-list.component';
 import { KategorieListComponent } from './data-collection/kategorie/kategorie-list/kategorie-list.component';
 import { KonfigurationListComponent } from './data-collection/konfiguration/konfiguration-list/konfiguration-list.component';
 
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'konfiguration',
     component: KonfigurationListComponent
+  },
+  {
+    path: 'gutschein',
+    component: GutscheinListComponent
   },
   {
     path: 'reporting',

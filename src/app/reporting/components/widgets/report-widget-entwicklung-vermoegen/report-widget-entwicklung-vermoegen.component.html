@@ -4,7 +4,7 @@
   </mat-card-header>
   <mat-card-content>
     <div class="row" echarts [options]="chartOptionEntwicklung"></div>
-    <div class="row">
+    <!-- <div class="row">
       <table>
         <tr>
           <td *ngFor="let item of label">
@@ -17,6 +17,18 @@
           </td>
         </tr>
       </table>
-    </div>
+    </div> -->
+    <!-- <div class="row">
+      <table>
+        <tr *ngFor="let item of data; let i = index">
+          <td>
+            {{ label[i] }}
+          </td>
+          <td>
+            {{ item | currency }}
+          </td>
+        </tr>
+      </table>
+    </div> -->
   </mat-card-content>
 </mat-card>
