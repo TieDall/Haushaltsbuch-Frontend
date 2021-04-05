@@ -19,7 +19,7 @@ export class GutscheinListComponent implements OnInit, OnDestroy {
   private readonly url = `${AppConfigService.appConfig.apiServer.url}Gutschein`;
 
   public data: Gutschein[] = [];
-  public columns: string[] = ['bezeichnung', 'betrag', 'ablaufdatum', 'actions'];
+  public columns: string[] = ['status', 'bezeichnung', 'betrag', 'ablaufdatum', 'actions'];
 
   public loaded = false;
 

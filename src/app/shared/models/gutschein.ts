@@ -5,4 +5,6 @@ export class Gutschein extends BaseModel {
   betrag: number;
   ablaufdatum: Date;
   bemerkung: string;
+  isOneMonthLeft: boolean;
+  isHalfYearLeft: boolean;
 }
