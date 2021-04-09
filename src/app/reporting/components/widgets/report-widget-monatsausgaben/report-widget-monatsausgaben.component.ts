@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import * as moment from 'moment';
 import { Observable, Subscription, zip } from 'rxjs';
@@ -17,6 +17,7 @@ import { AppConfigService } from 'src/app/shared/services/app-config.service';
 export class ReportWidgetMonatsausgabenComponent implements OnInit, OnDestroy {
 
   @Output() loaded = new EventEmitter<boolean>();
+  @Input() config: string;
 
   private readonly subscriptions = new Subscription();
 
@@ -119,6 +120,7 @@ export class ReportWidgetMonatsausgabenComponent implements OnInit, OnDestroy {
           this.data.push(newDataItem);
         }
 
+        this.data = this.data.filter(x => x.summe > 0);
         this.data.sort((a, b) => b.summe - a.summe);
       }),
       finalize(() => this.loaded.emit(true)));
@@ -155,14 +157,52 @@ export class ReportWidgetMonatsausgabenComponent implements OnInit, OnDestroy {
     };
   }
 
+  public showGraph(): boolean {
+    if (!this.config) {
+      return false;
+    }
+    return JSON.parse(this.config)['displayGraph'];
+  }
+
+  public showTable(): boolean {
+    if (!this.config) {
+      return false;
+    }
+    return JSON.parse(this.config)['displayTable'];
+  }
+
+  public initFix(): boolean {
+    if (!this.config) {
+      return false;
+    }
+    return JSON.parse(this.config)['initFix'];
+  }
+
+  public initVar(): boolean {
+    if (!this.config) {
+      return false;
+    }
+    return JSON.parse(this.config)['initVar'];
+  }
+
   public ngOnInit(): void {
     this.loaded.emit(false);
+
+    if (this.config) {
+      this.variableChecked = JSON.parse(this.config)['initVar'];
+      this.fixeChecked = JSON.parse(this.config)['initFix'];
+    }
+
     this.subscriptions.add(
       this.reportMonthService.subject
         .pipe(
           tap((x: { month: number, year: number }) => {
-            this.currentMonth = x.month;
-            this.currentYear = x.year;
+            if (x.month !== 0) {
+              this.currentMonth = x.month;
+            }
+            if (x.year !== 0) {
+              this.currentYear = x.year;
+            }
           }),
           switchMap(() => this.loadData()),
           tap(() => this.setGraph())

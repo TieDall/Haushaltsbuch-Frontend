@@ -12,6 +12,7 @@
   ></app-report-widget-monatsbilanz>
   <app-report-widget-monatsausgaben
     (loaded)="loadedEvent($event)"
+    [config]="reportConfig"
     *ngSwitchCase="3"
   ></app-report-widget-monatsausgaben>
   <app-report-widget-monatsdauerauftraege

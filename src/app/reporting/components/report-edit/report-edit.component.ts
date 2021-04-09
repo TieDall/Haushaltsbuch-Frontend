@@ -10,7 +10,9 @@ import { Report } from 'src/app/shared/models/report';
 import { ReportItem } from 'src/app/shared/models/report-item';
 import { ReportRow } from 'src/app/shared/models/report-row';
 import { ReportWidget } from 'src/app/shared/models/report-widget';
+import { ReportWidgetLabel } from 'src/app/shared/models/report-widget-labels';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { ReportConfigDialogComponent } from '../report-config-dialog/report-config-dialog.component';
 import { ReportItemDialogComponent } from '../report-item-dialog/report-item-dialog.component';
 import { ReportRowDialogComponent } from '../report-row-dialog/report-row-dialog.component';
 import { ReportStopEditingDialogComponent } from '../report-stop-editing-dialog/report-stop-editing-dialog.component';
@@ -104,6 +106,23 @@ export class ReportEditComponent implements OnInit, OnDestroy {
   public deleteRow(value: ReportRow) {
     const index = this.report.reportRows.indexOf(value);
     this.report.reportRows.splice(index, 1);
+  }
+
+  public isConfigable(reportItem: ReportItem): boolean {
+    if (ReportWidgetLabel.get(reportItem.reportWidget)) {
+      return true;
+    }
+    return false;
+  }
+
+  public configItem(reportItem: ReportItem) {
+    this.subscriptions.add(
+      this.matDialog.open(
+        ReportConfigDialogComponent,
+        { data: reportItem, disableClose: true }
+      ).afterClosed().subscribe((result: string) => {
+        reportItem.config = result;
+      }));
   }
 
   public ngOnInit(): void {

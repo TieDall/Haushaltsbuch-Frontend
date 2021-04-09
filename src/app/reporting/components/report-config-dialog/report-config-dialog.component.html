@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Konfiguration</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <div class="row" *ngFor="let item of items">
+      <div *ngIf="item.fieldType === 'boolean'">
+        <mat-checkbox formControlName="{{ item.fieldName }}">{{
+          item.fieldName
+        }}</mat-checkbox>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button (click)="close()">Abbrechen</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="form.invalid"
+    (click)="save()"
+  >
+    Übernehmen
+  </button>
+</mat-dialog-actions>

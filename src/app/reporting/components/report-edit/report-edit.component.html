@@ -32,10 +32,20 @@
     <div *ngIf="reportItem?.reportWidget">
       <app-report-widget-wrapper
         class="m-1"
-        [reportWidget]="reportItem.reportWidget"
+        [reportWidget]="reportItem?.reportWidget"
+        [reportConfig]="reportItem?.config"
       ></app-report-widget-wrapper>
-      <div class="app-edit-icon" (click)="editItem(reportItem)">
-        <mat-icon>edit</mat-icon>
+      <div class="btn-wrapper">
+        <div
+          class="app-edit-icon"
+          (click)="configItem(reportItem)"
+          *ngIf="isConfigable(reportItem)"
+        >
+          <mat-icon>settings</mat-icon>
+        </div>
+        <div class="app-edit-icon" (click)="editItem(reportItem)">
+          <mat-icon>edit</mat-icon>
+        </div>
       </div>
     </div>
     <div

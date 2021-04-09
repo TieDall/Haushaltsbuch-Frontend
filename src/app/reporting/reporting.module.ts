@@ -23,6 +23,7 @@ import { ReportWidgetVermoegenComponent } from './components/widgets/report-widg
 import { ReportWidgetEntwicklungVermoegenComponent } from './components/widgets/report-widget-entwicklung-vermoegen/report-widget-entwicklung-vermoegen.component';
 import { ReportWidgetEntwicklungBilanzComponent } from './components/widgets/report-widget-entwicklung-bilanz/report-widget-entwicklung-bilanz.component';
 import { ReportWidgetEntwicklungVermoegenBilanzComponent } from './components/widgets/report-widget-entwicklung-vermoegen-bilanz/report-widget-entwicklung-vermoegen-bilanz.component';
+import { ReportConfigDialogComponent } from './components/report-config-dialog/report-config-dialog.component';
 
 
 
@@ -44,7 +45,8 @@ import { ReportWidgetEntwicklungVermoegenBilanzComponent } from './components/wi
     ReportWidgetVermoegenComponent,
     ReportWidgetEntwicklungVermoegenComponent,
     ReportWidgetEntwicklungBilanzComponent,
-    ReportWidgetEntwicklungVermoegenBilanzComponent
+    ReportWidgetEntwicklungVermoegenBilanzComponent,
+    ReportConfigDialogComponent
   ],
   imports: [
     CommonModule,

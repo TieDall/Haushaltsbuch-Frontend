@@ -10,6 +10,7 @@ import { ReportWidget } from 'src/app/shared/models/report-widget';
 export class ReportWidgetWrapperComponent implements OnInit {
 
   @Input() reportWidget: ReportWidget;
+  @Input() reportConfig: string;
 
   public loaded = true;
 
@@ -19,7 +20,6 @@ export class ReportWidgetWrapperComponent implements OnInit {
     this.loaded = loaded;
   }
 
-  ngOnInit(): void {
-  }
+  public ngOnInit(): void { }
 
 }
