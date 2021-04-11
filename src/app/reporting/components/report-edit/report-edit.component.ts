@@ -97,7 +97,7 @@ export class ReportEditComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.matDialog.open(
         ReportItemDialogComponent,
-        { width: '80%', maxHeight: '80%' }
+        { width: '80%', maxHeight: '80%', disableClose: true, data: reportItem?.reportWidget }
       ).afterClosed().subscribe((reportWidget: ReportWidget) => {
         reportItem.reportWidget = reportWidget;
       }));

@@ -10,5 +10,7 @@
     >
       {{ vermoegen | currency }}
     </p>
+    <p *ngIf="isInklVermoegen">(inkl. Rücklagen)</p>
+    <p *ngIf="!isInklVermoegen">(exkl. Rücklagen)</p>
   </mat-card-content>
 </mat-card>

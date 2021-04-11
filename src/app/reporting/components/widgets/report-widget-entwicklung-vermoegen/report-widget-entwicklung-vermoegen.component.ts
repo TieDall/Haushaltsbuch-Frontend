@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import * as moment from 'moment';
-import { Subscription } from 'rxjs';
+import { Subscription, zip } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Ruecklage } from 'src/app/shared/models/ruecklage';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 
 @Component({
@@ -13,13 +14,17 @@ import { AppConfigService } from 'src/app/shared/services/app-config.service';
 })
 export class ReportWidgetEntwicklungVermoegenComponent implements OnInit, OnDestroy {
 
+  @Input() config: string;
+
   private readonly subscriptions = new Subscription();
 
   private readonly url = `${AppConfigService.appConfig.apiServer.url}Auswertung/GetVermoegen`;
+  private readonly urlRuecklagen = `${AppConfigService.appConfig.apiServer.url}Ruecklage`;
 
   public data: number[] = [];
   public label: string[] = [];
   public chartOptionEntwicklung: EChartsOption;
+  public isInklVermoegen = false;
 
   constructor(
     private readonly httpClient: HttpClient
@@ -35,13 +40,23 @@ export class ReportWidgetEntwicklungVermoegenComponent implements OnInit, OnDest
     const now = moment();
     const start = moment().add(-5, 'months');
     this.subscriptions.add(
-      this.httpClient.get(`${this.url}/${moment(start).year()}/${moment(start).month() + 1}/${moment(now).year()}/${moment(now).month() + 1}`)
-        .pipe(
-          tap((result: number[]) => {
-            this.data = result;
-            this.processChart();
-          })
-        )
+      zip(
+        this.httpClient.get(`${this.url}/${moment(start).year()}/${moment(start).month() + 1}/${moment(now).year()}/${moment(now).month() + 1}`),
+        this.httpClient.get(`${this.urlRuecklagen}`)
+      ).pipe(
+        tap(([vermoegen, ruecklagen]) => {
+          debugger;
+          this.data = vermoegen as number[];
+          if (this.config) {
+            if (JSON.parse(this.config)['includeRuecklagen']) {
+              this.isInklVermoegen = true;
+              const sumRuecklagen = (ruecklagen as Ruecklage[]).reduce((acc, cur) => acc + cur.summe, 0);
+              this.data.forEach((value, index) => this.data[index] = value + sumRuecklagen);
+            }
+          }
+          this.processChart();
+        })
+      )
         .subscribe()
     );
   }
