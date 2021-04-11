@@ -6,6 +6,7 @@ import { DauerauftragGroupedListComponent } from './data-collection/dauerauftrag
 import { GutscheinListComponent } from './data-collection/gutschein/gutschein-list/gutschein-list.component';
 import { KategorieListComponent } from './data-collection/kategorie/kategorie-list/kategorie-list.component';
 import { KonfigurationListComponent } from './data-collection/konfiguration/konfiguration-list/konfiguration-list.component';
+import { RuecklageListComponent } from './data-collection/ruecklage/ruecklage-list/ruecklage-list.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'gutschein',
     component: GutscheinListComponent
+  },
+  {
+    path: 'ruecklage',
+    component: RuecklageListComponent
   },
   {
     path: 'reporting',

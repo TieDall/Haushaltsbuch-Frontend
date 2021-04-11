@@ -14,6 +14,8 @@ import { KonfigurationListComponent } from './konfiguration/konfiguration-list/k
 import { KonfigurationEditComponent } from './konfiguration/konfiguration-edit/konfiguration-edit.component';
 import { GutscheinListComponent } from './gutschein/gutschein-list/gutschein-list.component';
 import { GutscheinEditComponent } from './gutschein/gutschein-edit/gutschein-edit.component';
+import { RuecklageEditComponent } from './ruecklage/ruecklage-edit/ruecklage-edit.component';
+import { RuecklageListComponent } from './ruecklage/ruecklage-list/ruecklage-list.component';
 
 
 
@@ -29,7 +31,9 @@ import { GutscheinEditComponent } from './gutschein/gutschein-edit/gutschein-edi
     KonfigurationListComponent,
     KonfigurationEditComponent,
     GutscheinListComponent,
-    GutscheinEditComponent
+    GutscheinEditComponent,
+    RuecklageEditComponent,
+    RuecklageListComponent
   ],
   imports: [
     CommonModule,
