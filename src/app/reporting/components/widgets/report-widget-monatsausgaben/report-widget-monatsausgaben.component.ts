@@ -37,6 +37,8 @@ export class ReportWidgetMonatsausgabenComponent implements OnInit, OnDestroy {
   public currentMonth = 0;
   public currentYear = 0;
 
+  public title = '';
+
   constructor(
     private readonly httpClient: HttpClient,
     private readonly reportMonthService: ReportMonthService
@@ -157,6 +159,13 @@ export class ReportWidgetMonatsausgabenComponent implements OnInit, OnDestroy {
     };
   }
 
+  public showOptions(): boolean {
+    if (!this.config) {
+      return false;
+    }
+    return JSON.parse(this.config)['showOptions'];
+  }
+
   public showGraph(): boolean {
     if (!this.config) {
       return false;
@@ -192,6 +201,14 @@ export class ReportWidgetMonatsausgabenComponent implements OnInit, OnDestroy {
       this.variableChecked = JSON.parse(this.config)['initVar'];
       this.fixeChecked = JSON.parse(this.config)['initFix'];
     }
+
+    if (this.variableChecked && !this.fixeChecked) {
+      this.title = 'variable ';
+    }
+    if (!this.variableChecked && this.fixeChecked) {
+      this.title = 'fixe ';
+    }
+    this.title += 'Ausgaben';
 
     this.subscriptions.add(
       this.reportMonthService.subject

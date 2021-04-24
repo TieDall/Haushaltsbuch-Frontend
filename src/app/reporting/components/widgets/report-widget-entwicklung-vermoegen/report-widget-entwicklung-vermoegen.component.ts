@@ -45,7 +45,6 @@ export class ReportWidgetEntwicklungVermoegenComponent implements OnInit, OnDest
         this.httpClient.get(`${this.urlRuecklagen}`)
       ).pipe(
         tap(([vermoegen, ruecklagen]) => {
-          debugger;
           this.data = vermoegen as number[];
           if (this.config) {
             if (JSON.parse(this.config)['includeRuecklagen']) {

@@ -30,7 +30,7 @@ export class ReportOverviewComponent implements OnInit, OnDestroy {
   private loadData(): Observable<any> {
     return this.httpClient.get<Report[]>(this.url)
       .pipe(
-        tap((x: Report[]) => this.reports = x),
+        tap((x: Report[]) => this.reports = x.sort((a, b) => a.bezeichnung.localeCompare(b.bezeichnung))),
         finalize(() => this.loaded = true)
       );
   }

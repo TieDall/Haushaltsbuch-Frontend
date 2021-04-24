@@ -39,7 +39,7 @@ export class ReportWidgetMonatsbuchungenComponent implements OnInit, OnDestroy {
           const summeAusgaben = buchungen.filter(x => !x.isEinnahme).reduce((acc, cur) => acc + cur.betrag, 0);
 
           this.data.push({
-            betrag: summeEinnahmen - summeAusgaben,
+            betrag: Math.abs(summeEinnahmen - summeAusgaben),
             isEinnahme: (summeEinnahmen - summeAusgaben) >= 0
           } as Buchung);
         }),

@@ -26,3 +26,7 @@ body {
 .ausgabe {
   color: #ff6347;
 }
+
+div[echarts] {
+  min-width: 200px;
+}

@@ -1,9 +1,9 @@
 <mat-card class="col-md col-sm-12 col-xs-12">
   <mat-card-header>
-    <mat-card-title>Ausgaben</mat-card-title>
+    <mat-card-title>{{ title }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div class="row">
+    <div class="row" *ngIf="showOptions()">
       <div class="col" align="right">
         <mat-checkbox [checked]="initVar()" (change)="varChange($event)"
           >variable</mat-checkbox

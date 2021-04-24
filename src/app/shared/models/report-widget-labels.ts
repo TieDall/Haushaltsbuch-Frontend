@@ -5,7 +5,8 @@ export const ReportWidgetLabel = new Map<number, Map<string, string>>([
     ['displayGraph', 'boolean'],
     ['displayTable', 'boolean'],
     ['initFix', 'boolean'],
-    ['initVar', 'boolean']
+    ['initVar', 'boolean'],
+    ['showOptions', 'boolean']
   ])],
   [ReportWidget.vermoegen, new Map<string, string>([
     ['includeRuecklagen', 'boolean']
