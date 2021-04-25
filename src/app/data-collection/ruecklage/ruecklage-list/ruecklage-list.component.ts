@@ -34,6 +34,11 @@ export class RuecklageListComponent implements OnInit, OnDestroy {
       .pipe(
         tap((ruecklage: Ruecklage[]) => {
           this.data = ruecklage.sort((a, b) => b.summe - a.summe);
+          this.data.push({
+            id: 0,
+            bezeichnung: '',
+            summe: ruecklage.reduce((acc, cur) => acc + cur.summe, 0)
+          });
         }),
         finalize(() => this.loaded = true)
       );
