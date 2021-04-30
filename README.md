@@ -1,27 +1,42 @@
-# HaushaltsbuchFrontend
+# Getting Started
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.5.
+## Installation
+1. Install NodeJS
+```
+sudo apt-get install -y nodejs
+```
+2. Install NPM 
+```
+sudo apt-get install -g @angular/cli
+```
+3. Install Angular
+```
+sudo npm install -g @angular/cli
+```
 
-## Development server
+## Clone Repo
+1. Clone Repository
+2. Configure Backend-Server
+Edit file: 
+```
+src/assets/app-config.json
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Configure App to run at startup
+1. Open /etc/rc.local
+```
+sudo nano /etc/rc.local
+```
+2. Append file before exit 0:
+```
+su pi -c 'cd [path to cloned project] && sudo ng s --host 0.0.0.0 --port 80 --disable-host-check &
+```
 
-## Code scaffolding
+## Validate installation
+Now you should be able to reach the web app using your pi´s ip adress.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Besonderheiten
+Der Pi scheint nicht ausreichend Leistung zu haben, um einen Build der Anwendung durchführen zu können. Daher der Workaround mit dem ng serve. 
+Die Anwendung sollte so nicht im Internet betrieben werden. Gründe dafür sind neben keiner implementierten Authentifizierung:
+* ng serve ist nicht für den sicheren produktiven Einsatz vorgesehen
+* der Parameter --disable-host-check ermöglicht es, dass über die Fritzbox dem Pi ein Namen gegeben werden kann über den das Haushaltsbuch aufgerufen werden kann. Sicherheitstechnisch ist das jedoch nicht empfohlen.
