@@ -19,17 +19,21 @@ export class BackendInterceptor implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next
-      .handle(request)
-      .pipe(tap(
-        (response: HttpEvent<any>) => {
-        },
-        (error: HttpErrorResponse) => {
-          this.backendService.backendReachable.next(false);
-        },
-        () => {
-          this.backendService.backendReachable.next(true);
-        }
-      ));
+    if (!request.url.includes('app-config.json')) {
+      return next
+        .handle(request)
+        .pipe(tap(
+          (response: HttpEvent<any>) => {
+          },
+          (error: HttpErrorResponse) => {
+            this.backendService.backendReachable.next(false);
+          },
+          () => {
+            this.backendService.backendReachable.next(true);
+          }
+        ));
+    }
+
+    return next.handle(request);
   }
 }
