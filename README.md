@@ -29,7 +29,7 @@ sudo nano /etc/rc.local
 ```
 2. Append file before exit 0:
 ```
-su pi -c 'cd [path to cloned project] && sudo ng s --host 0.0.0.0 --port 80 --disable-host-check &
+su pi -c 'cd [path to cloned project] && sudo ng s --host 0.0.0.0 --port 80 --disable-host-check &'
 ```
 
 ## Validate installation
