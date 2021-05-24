@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Daten löschen</h2>
+<mat-dialog-content>
+  <p>Alle Datensätze werden gelöscht und können nicht wiederhergestellt werden.</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Abbrechen</button>
+  <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
+    Fortsetzen
+  </button>
+</mat-dialog-actions>

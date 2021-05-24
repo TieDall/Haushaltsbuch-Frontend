@@ -49,7 +49,7 @@
   </mat-card>
 </div>
 
-<h2>Konfiguration</h2>
+<h2>Einstellungen</h2>
 
 <div class="row m-2">
   <mat-card class="col m-2 mat-card-link" routerLink="konfiguration">
@@ -58,6 +58,14 @@
     </mat-card-header>
     <mat-card-content>
       <mat-icon>settings</mat-icon>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="col m-2 mat-card-link" (click)="resetDatabase()">
+    <mat-card-header>
+      <mat-card-title>Daten löschen</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-icon>restart_alt</mat-icon>
     </mat-card-content>
   </mat-card>
 </div>
