@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Hinweis</h2>
+<mat-dialog-content>
+  <p>Für die Kategorie existieren <b>{{this.anzahlBuchungen}}</b> Buchungen.</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Abbrechen</button>
+  <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
+    Fortsetzen
+  </button>
+</mat-dialog-actions>

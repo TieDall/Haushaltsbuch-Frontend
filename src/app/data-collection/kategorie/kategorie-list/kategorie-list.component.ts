@@ -6,6 +6,7 @@ import { Kategorie } from 'src/app/shared/models/kategorie';
 import { KategorieEditComponent } from '../kategorie-edit/kategorie-edit.component';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { HttpClient } from '@angular/common/http';
+import { KategorieDeleteDialogComponent } from '../kategorie-delete-dialog/kategorie-delete-dialog.component';
 
 @Component({
   selector: 'app-kategorie-list',
@@ -71,13 +72,23 @@ export class KategorieListComponent implements OnInit, OnDestroy {
   }
 
   public delete(kategorie: Kategorie) {
-    this.subscriptions.add(
-      this.httpClient
-        .delete(`${this.url}/${kategorie.id}`)
-        .pipe(
-          switchMap(() => this.loadData())
-        )
-        .subscribe());
+    this.subscriptions.add(this.openDeleteDialog(kategorie).subscribe());
+  }
+
+  private openDeleteDialog(kategorie: Kategorie) {
+    return this.dialog.open(KategorieDeleteDialogComponent, {data: kategorie})
+      .afterClosed()
+      .pipe(
+        switchMap((continueDelete: boolean) => continueDelete ? this.sendDeleteRequest(kategorie) : of([]))
+      );
+  }
+
+  private sendDeleteRequest(kategorie: Kategorie) {
+    return this.httpClient
+      .delete(`${this.url}/${kategorie.id}`)
+      .pipe(
+        switchMap(() => this.loadData())
+      );
   }
 
   public ngOnInit(): void {
