@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { of, Subscription } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { Kategorie } from 'src/app/shared/models/kategorie';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 
@@ -22,6 +24,7 @@ export class KategorieEditComponent implements OnInit, OnDestroy {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly httpClient: HttpClient,
+    private readonly snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<KategorieEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Kategorie
   ) {
@@ -62,11 +65,33 @@ export class KategorieEditComponent implements OnInit, OnDestroy {
     if (this.data?.id) {
       this.httpClient
         .put(`${this.url}/${this.data.id}`, this.data)
-        .subscribe(() => this.dialogRef.close());
+        .pipe(
+          map(() => true),
+          catchError(() => of(false))
+        )
+        .subscribe((isSuccess: boolean) => {
+          if (isSuccess) {
+            this.snackBar.open('Speichern erfolgreich.', 'Ok', {duration: 2000});
+            this.dialogRef.close();
+          } else {
+            this.snackBar.open('Speichern fehlgeschlagen.', 'Ok', {duration: 2000});
+          }
+        });
     } else {
       this.httpClient
         .post(this.url, this.data)
-        .subscribe(() => this.dialogRef.close());
+        .pipe(
+          map(() => true),
+          catchError(() => of(false))
+        )
+        .subscribe((isSuccess: boolean) => {
+          if (isSuccess) {
+            this.snackBar.open('Speichern erfolgreich.', 'Ok', {duration: 2000});
+            this.dialogRef.close();
+          } else {
+            this.snackBar.open('Speichern fehlgeschlagen.', 'Ok', {duration: 2000});
+          }
+        });
     }
   }
 

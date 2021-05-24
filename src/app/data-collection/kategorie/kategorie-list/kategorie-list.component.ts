@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { finalize, switchMap, tap } from 'rxjs/operators';
+import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, of, Subscription } from 'rxjs';
 import { Kategorie } from 'src/app/shared/models/kategorie';
@@ -7,6 +7,8 @@ import { KategorieEditComponent } from '../kategorie-edit/kategorie-edit.compone
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { HttpClient } from '@angular/common/http';
 import { KategorieDeleteDialogComponent } from '../kategorie-delete-dialog/kategorie-delete-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { BackendService } from 'src/app/shared/services/backend.service';
 
 @Component({
   selector: 'app-kategorie-list',
@@ -25,9 +27,13 @@ export class KategorieListComponent implements OnInit, OnDestroy {
 
   public loaded = false;
 
+  public disableButton = true;
+
   constructor(
     private readonly dialog: MatDialog,
-    private readonly httpClient: HttpClient
+    private readonly httpClient: HttpClient,
+    private readonly backendService: BackendService,
+    private readonly snackBar: MatSnackBar
   ) { }
 
   private loadData(): Observable<Kategorie[]> {
@@ -41,6 +47,10 @@ export class KategorieListComponent implements OnInit, OnDestroy {
           this.ausgabeKategorieData = kategorien
             .filter(x => !x.isEinnahme)
             .sort((a, b) => a.bezeichnung.localeCompare(b.bezeichnung));
+        }),
+        catchError(() => {
+          this.snackBar.open('Fehler beim Laden.', 'Ok', {duration: 3000});
+          return of([]);
         }),
         finalize(() => this.loaded = true)
       );
@@ -98,6 +108,12 @@ export class KategorieListComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscriptions.add(this.loadData().subscribe());
+
+    this.subscriptions.add(
+      this.backendService.backendReachable.subscribe((x: boolean) => {
+        this.disableButton = !x;
+      })
+    );
   }
 
   public ngOnDestroy(): void {

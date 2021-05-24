@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { of, Subscription } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { Buchung } from 'src/app/shared/models/buchung';
 import { Kategorie } from 'src/app/shared/models/kategorie';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
@@ -22,6 +23,7 @@ export class KategorieDeleteDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly httpClient: HttpClient,
+    private readonly snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<KategorieDeleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Kategorie
   ) { }
@@ -29,7 +31,11 @@ export class KategorieDeleteDialogComponent implements OnInit, OnDestroy {
   private loadBuchungen() {
     return this.httpClient.get(`${this.urlBuchungen}/${this.data.id}`)
       .pipe(
-        tap((buchungen: Buchung[]) => this.anzahlBuchungen = buchungen.length)
+        tap((buchungen: Buchung[]) => this.anzahlBuchungen = buchungen.length),
+        catchError(() => {
+          this.snackBar.open('Fehler beim Laden.', 'Ok', {duration: 3000});
+          return of([]);
+        })
       );
   }
 
