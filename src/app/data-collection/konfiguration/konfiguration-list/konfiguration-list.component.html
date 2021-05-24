@@ -1,4 +1,8 @@
-<div class="row">
+<div class="spinner" *ngIf="!loaded">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="row" *ngIf="loaded">
   <div class="col">
     <table mat-table [dataSource]="data">
       <ng-container matColumnDef="parameter">

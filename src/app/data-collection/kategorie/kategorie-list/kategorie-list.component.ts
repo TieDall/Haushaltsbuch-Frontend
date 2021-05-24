@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { switchMap, tap } from 'rxjs/operators';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, of, Subscription } from 'rxjs';
 import { Kategorie } from 'src/app/shared/models/kategorie';
@@ -23,12 +23,15 @@ export class KategorieListComponent implements OnInit, OnDestroy {
 
   private readonly url = `${AppConfigService.appConfig.apiServer.url}Kategorie`;
 
+  public loaded = false;
+
   constructor(
     private readonly dialog: MatDialog,
     private readonly httpClient: HttpClient
   ) { }
 
   private loadData(): Observable<Kategorie[]> {
+    this.loaded = false;
     return this.httpClient.get<Kategorie[]>(this.url)
       .pipe(
         tap((kategorien: Kategorie[]) => {
@@ -38,7 +41,8 @@ export class KategorieListComponent implements OnInit, OnDestroy {
           this.ausgabeKategorieData = kategorien
             .filter(x => !x.isEinnahme)
             .sort((a, b) => a.bezeichnung.localeCompare(b.bezeichnung));
-        })
+        }),
+        finalize(() => this.loaded = true)
       );
   }
 

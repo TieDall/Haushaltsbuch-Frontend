@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 import { DauerauftragGrouped } from 'src/app/shared/models/dauerauftrag-grouped';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { DauerauftragEditComponent } from '../dauerauftrag-edit/dauerauftrag-edit.component';
@@ -22,18 +22,22 @@ export class DauerauftragGroupedListComponent implements OnInit, OnDestroy {
   public data: DauerauftragGrouped[] = [];
   public columns: string[] = ['status', 'kategorie', 'bezeichnung', 'betrag', 'actions'];
 
+  public loaded = false;
+
   constructor(
     private readonly httpClient: HttpClient,
     private readonly dialog: MatDialog
   ) { }
 
   private loadData(): Observable<DauerauftragGrouped[]> {
+    this.loaded = false;
     return this.httpClient
       .get<DauerauftragGrouped[]>(`${this.url}`)
       .pipe(
         tap((dauerauftraegeGrouped: DauerauftragGrouped[]) => {
           this.data = dauerauftraegeGrouped.sort((a, b) => a.bezeichnung.localeCompare(b.bezeichnung))
-        })
+        }),
+        finalize(() => this.loaded = true)
       );
   }
 
