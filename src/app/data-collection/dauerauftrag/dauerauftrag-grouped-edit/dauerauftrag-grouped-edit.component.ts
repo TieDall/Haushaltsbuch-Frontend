@@ -55,7 +55,8 @@ export class DauerauftragGroupedEditComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(
       this.dialog.open(DauerauftragEditComponent, {
-        data: dauerauftrag
+        data: dauerauftrag,
+        disableClose: true
       })
         .afterClosed()
         .pipe(
@@ -68,7 +69,8 @@ export class DauerauftragGroupedEditComponent implements OnInit, OnDestroy {
   public edit(dauerauftrag: Dauerauftrag) {
     this.subscriptions.add(
       this.dialog.open(DauerauftragEditComponent, {
-        data: dauerauftrag
+        data: dauerauftrag,
+        disableClose: true
       })
         .afterClosed()
         .pipe(

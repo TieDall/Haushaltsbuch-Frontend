@@ -47,7 +47,7 @@ export class RuecklageListComponent implements OnInit, OnDestroy {
   public create() {
     this.subscriptions.add(
       this.dialog
-        .open(RuecklageEditComponent)
+        .open(RuecklageEditComponent, {disableClose: true})
         .afterClosed()
         .pipe(
           switchMap(() => this.load())
@@ -62,7 +62,8 @@ export class RuecklageListComponent implements OnInit, OnDestroy {
         .open(
           RuecklageEditComponent,
           {
-            data: ruecklage
+            data: ruecklage,
+            disableClose: true
           }
         )
         .afterClosed()

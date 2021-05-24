@@ -25,7 +25,8 @@ export class BtnBuchungComponent implements OnInit, OnDestroy {
         .open(
           BuchungEditComponent,
           {
-            width: '500px'
+            width: '500px',
+            disableClose: true
           })
         .afterClosed()
         .pipe(

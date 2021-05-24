@@ -36,7 +36,7 @@ export class ReportOverviewComponent implements OnInit, OnDestroy {
   }
 
   public add() {
-    const dialogRef = this.matDialog.open(ReportCreateDialogComponent);
+    const dialogRef = this.matDialog.open(ReportCreateDialogComponent, {disableClose: true});
     this.subscriptions.add(
       dialogRef.afterClosed()
         .pipe(

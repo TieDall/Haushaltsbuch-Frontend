@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public resetDatabase() {
     this.subscriptions.add(
-      this.dialog.open(ResetDatabaseDialogComponent).afterClosed()
+      this.dialog.open(ResetDatabaseDialogComponent, {disableClose: true}).afterClosed()
         .pipe(
           switchMap((contineReset: boolean) => contineReset ? this.httpClient.post(`${this.url}/ResetDatabase`, null) : of([]))
         )

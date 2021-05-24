@@ -21,7 +21,7 @@ export class DeleteInterceptor implements HttpInterceptor {
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (request.method === 'DELETE') {
-      return this.matDialog.open(ConfirmDeleteDialogComponent).afterClosed()
+      return this.matDialog.open(ConfirmDeleteDialogComponent, {disableClose: true}).afterClosed()
         .pipe(
           switchMap((result: boolean) => {
             if (result) {

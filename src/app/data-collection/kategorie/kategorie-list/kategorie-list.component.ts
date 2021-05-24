@@ -45,7 +45,7 @@ export class KategorieListComponent implements OnInit, OnDestroy {
   public create() {
     this.subscriptions.add(
       this.dialog
-        .open(KategorieEditComponent)
+        .open(KategorieEditComponent, {disableClose: true})
         .afterClosed()
         .pipe(
           switchMap(() => this.loadData())
@@ -60,7 +60,8 @@ export class KategorieListComponent implements OnInit, OnDestroy {
         .open(
           KategorieEditComponent,
           {
-            data: kategorie
+            data: kategorie,
+            disableClose: true
           }
         )
         .afterClosed()
@@ -76,7 +77,7 @@ export class KategorieListComponent implements OnInit, OnDestroy {
   }
 
   private openDeleteDialog(kategorie: Kategorie) {
-    return this.dialog.open(KategorieDeleteDialogComponent, {data: kategorie})
+    return this.dialog.open(KategorieDeleteDialogComponent, {data: kategorie, disableClose: true})
       .afterClosed()
       .pipe(
         switchMap((continueDelete: boolean) => continueDelete ? this.sendDeleteRequest(kategorie) : of([]))

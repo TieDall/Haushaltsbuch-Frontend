@@ -58,7 +58,7 @@ export class BuchungListComponent implements OnInit, OnDestroy {
   public create() {
     this.subscriptions.add(
       this.dialog
-        .open(BuchungEditComponent)
+        .open(BuchungEditComponent, {disableClose: true})
         .afterClosed()
         .pipe(
           switchMap(() => this.loadData(this.currentYear, this.currentMonth))
@@ -73,7 +73,8 @@ export class BuchungListComponent implements OnInit, OnDestroy {
         .open(
           BuchungEditComponent,
           {
-            data: buchung
+            data: buchung,
+            disableClose: true
           }
         )
         .afterClosed()

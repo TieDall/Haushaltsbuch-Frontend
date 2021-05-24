@@ -40,7 +40,7 @@ export class DauerauftragGroupedListComponent implements OnInit, OnDestroy {
   public create() {
     this.subsciptions.add(
       this.dialog
-        .open(DauerauftragEditComponent)
+        .open(DauerauftragEditComponent, {disableClose: true})
         .afterClosed()
         .pipe(
           switchMap(() => this.loadData())
@@ -54,7 +54,8 @@ export class DauerauftragGroupedListComponent implements OnInit, OnDestroy {
         .open(
           DauerauftragGroupedEditComponent,
           {
-            data: dauerauftragGrouped
+            data: dauerauftragGrouped,
+            disableClose: true
           })
         .afterClosed()
         .pipe(

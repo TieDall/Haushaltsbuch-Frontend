@@ -42,7 +42,7 @@ export class GutscheinListComponent implements OnInit, OnDestroy {
   public create() {
     this.subscriptions.add(
       this.dialog
-        .open(GutscheinEditComponent)
+        .open(GutscheinEditComponent, {disableClose: true})
         .afterClosed()
         .pipe(
           switchMap(() => this.load())
@@ -57,7 +57,8 @@ export class GutscheinListComponent implements OnInit, OnDestroy {
         .open(
           GutscheinEditComponent,
           {
-            data: gutschein
+            data: gutschein,
+            disableClose: true
           }
         )
         .afterClosed()

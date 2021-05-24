@@ -40,7 +40,8 @@ export class KonfigurationListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.dialog.open(KonfigurationEditComponent, {
         data: konfiguration,
-        width: '500px'
+        width: '500px',
+        disableClose: true
       })
         .afterClosed()
         .pipe(

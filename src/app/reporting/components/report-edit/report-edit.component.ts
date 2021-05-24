@@ -60,7 +60,7 @@ export class ReportEditComponent implements OnInit, OnDestroy {
   }
 
   public close() {
-    this.matDialog.open(ReportStopEditingDialogComponent).afterClosed()
+    this.matDialog.open(ReportStopEditingDialogComponent, {disableClose: true}).afterClosed()
       .subscribe((result: boolean) => {
         if (result) {
           this.router.navigate(['/report/', this.report.id]);
@@ -70,7 +70,7 @@ export class ReportEditComponent implements OnInit, OnDestroy {
 
   public addRow() {
     this.subscriptions.add(
-      this.matDialog.open(ReportRowDialogComponent).afterClosed().subscribe(anzahl => {
+      this.matDialog.open(ReportRowDialogComponent, {disableClose: true}).afterClosed().subscribe(anzahl => {
         const reportItems: ReportItem[] = [];
         for (let index = 0; index < anzahl; index++) {
           reportItems.push({
