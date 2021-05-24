@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
-import { Observable, Subscription } from 'rxjs';
-import { finalize, switchMap, tap } from 'rxjs/operators';
+import { Observable, of, Subscription } from 'rxjs';
+import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { Buchung } from 'src/app/shared/models/buchung';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { BtnBuchungService } from 'src/app/shared/services/btn-buchung.service';
@@ -32,7 +33,8 @@ export class BuchungListComponent implements OnInit, OnDestroy {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly dialog: MatDialog,
-    private readonly btnBuchungService: BtnBuchungService
+    private readonly btnBuchungService: BtnBuchungService,
+    private readonly snackBar: MatSnackBar
   ) {
     this.initDate();
   }
@@ -50,6 +52,10 @@ export class BuchungListComponent implements OnInit, OnDestroy {
       .pipe(
         tap((buchungen: Buchung[]) => {
           this.data = buchungen.sort((a, b) => new Date(b.buchungstag).getTime() - new Date(a.buchungstag).getTime())
+        }),
+        catchError(() => {
+          this.snackBar.open('Fehler beim Laden.', 'Ok', {duration: 3000});
+          return of([]);
         }),
         finalize(() => this.loaded = true)
       );
@@ -132,10 +138,6 @@ export class BuchungListComponent implements OnInit, OnDestroy {
           switchMap(() => this.loadData(this.currentYear, this.currentMonth))
         )
         .subscribe()
-    );
-
-    this.subscriptions.add(
-      this.loadData(this.currentYear, this.currentMonth).subscribe()
     );
   }
 

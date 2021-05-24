@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BuchungEditComponent } from 'src/app/data-collection/buchung/buchung-edit/buchung-edit.component';
+import { BackendService } from '../../services/backend.service';
 import { BtnBuchungService } from '../../services/btn-buchung.service';
 
 @Component({
@@ -14,9 +15,12 @@ export class BtnBuchungComponent implements OnInit, OnDestroy {
 
   private readonly subscriptions = new Subscription();
 
+  public disableButton = true;
+
   constructor(
     private readonly dialog: MatDialog,
-    private readonly btnBuchungService: BtnBuchungService
+    private readonly btnBuchungService: BtnBuchungService,
+    private readonly backendService: BackendService
   ) { }
 
   public openDialog() {
@@ -36,6 +40,9 @@ export class BtnBuchungComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.backendService.backendReachable.subscribe((x: boolean) => {
+      this.disableButton = !x;
+    });
   }
 
   public ngOnDestroy(): void {
