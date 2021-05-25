@@ -3,9 +3,10 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
-import { Observable, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of, Subscription } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Dauerauftrag } from 'src/app/shared/models/dauerauftrag';
 import { Intervall } from 'src/app/shared/models/intervall';
 import { IntervallLabel } from 'src/app/shared/models/intervall-labels';
@@ -45,6 +46,7 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly httpClient: HttpClient,
+    private readonly snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DauerauftragEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Dauerauftrag
   ) {
@@ -110,11 +112,33 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
     if (this.data?.id) {
       this.httpClient
         .put(this.url + '/' + this.data.id, this.data)
-        .subscribe(() => this.dialogRef.close());
+        .pipe(
+          map(() => true),
+          catchError(() => of(false))
+        )
+        .subscribe((isSuccess: boolean) => {
+          if (isSuccess) {
+            this.snackBar.open('Speichern erfolgreich.', 'Ok', {duration: 2000});
+            this.dialogRef.close();
+          } else {
+            this.snackBar.open('Speichern fehlgeschlagen.', 'Ok', {duration: 2000});
+          }
+        });
     } else {
       this.httpClient
         .post(this.url, this.data)
-        .subscribe(() => this.dialogRef.close());
+        .pipe(
+          map(() => true),
+          catchError(() => of(false))
+        )
+        .subscribe((isSuccess: boolean) => {
+          if (isSuccess) {
+            this.snackBar.open('Speichern erfolgreich.', 'Ok', {duration: 2000});
+            this.dialogRef.close();
+          } else {
+            this.snackBar.open('Speichern fehlgeschlagen.', 'Ok', {duration: 2000});
+          }
+        });
     }
   }
 
@@ -157,6 +181,9 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
         {
           value: this.data?.beginn,
           disabled: false
+        },
+        {
+          validators: [Validators.min(0.01)]
         }
       ],
       ende: [

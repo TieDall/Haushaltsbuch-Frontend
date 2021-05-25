@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
-import { Observable, Subscription } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { Observable, of, Subscription } from 'rxjs';
+import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { Dauerauftrag } from 'src/app/shared/models/dauerauftrag';
 import { DauerauftragGrouped } from 'src/app/shared/models/dauerauftrag-grouped';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
@@ -26,20 +27,29 @@ export class DauerauftragGroupedEditComponent implements OnInit, OnDestroy {
 
   public header = '';
 
+  public loaded = false;
+
   constructor(
     private readonly httpClient: HttpClient,
     private readonly dialog: MatDialog,
+    private readonly snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DauerauftragGroupedEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DauerauftragGrouped
   ) { }
 
   private loadData(): Observable<Dauerauftrag[]> {
+    this.loaded = false;
     return this.httpClient
       .get<Dauerauftrag[]>(`${this.url}/${this.data.bezeichnung}/${this.data.kategorie.id}`)
       .pipe(
         tap((dauerauftrag: Dauerauftrag[]) => {
           this.tableData = dauerauftrag.sort((a, b) => moment(a.ende).isAfter(b.ende) ? -1 : 0);
           this.header = this.tableData[0].bezeichnung;
+        }),
+        finalize(() => this.loaded = true),
+        catchError(() => {
+          this.snackBar.open('Fehler beim Laden.', 'Ok', {duration: 3000});
+          return of([]);
         })
       );
   }

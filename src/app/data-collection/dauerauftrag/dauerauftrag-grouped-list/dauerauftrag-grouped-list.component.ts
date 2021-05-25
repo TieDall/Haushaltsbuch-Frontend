@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
-import { finalize, switchMap, tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, of, Subscription } from 'rxjs';
+import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { DauerauftragGrouped } from 'src/app/shared/models/dauerauftrag-grouped';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { BackendService } from 'src/app/shared/services/backend.service';
 import { DauerauftragEditComponent } from '../dauerauftrag-edit/dauerauftrag-edit.component';
 import { DauerauftragGroupedEditComponent } from '../dauerauftrag-grouped-edit/dauerauftrag-grouped-edit.component';
 
@@ -24,9 +26,13 @@ export class DauerauftragGroupedListComponent implements OnInit, OnDestroy {
 
   public loaded = false;
 
+  public disableButton = true;
+
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly backendService: BackendService,
+    private readonly snackBar: MatSnackBar
   ) { }
 
   private loadData(): Observable<DauerauftragGrouped[]> {
@@ -37,7 +43,11 @@ export class DauerauftragGroupedListComponent implements OnInit, OnDestroy {
         tap((dauerauftraegeGrouped: DauerauftragGrouped[]) => {
           this.data = dauerauftraegeGrouped.sort((a, b) => a.bezeichnung.localeCompare(b.bezeichnung))
         }),
-        finalize(() => this.loaded = true)
+        finalize(() => this.loaded = true),
+        catchError(() => {
+          this.snackBar.open('Fehler beim Laden.', 'Ok', {duration: 3000});
+          return of([]);
+        })
       );
   }
 
@@ -58,8 +68,7 @@ export class DauerauftragGroupedListComponent implements OnInit, OnDestroy {
         .open(
           DauerauftragGroupedEditComponent,
           {
-            data: dauerauftragGrouped,
-            disableClose: true
+            data: dauerauftragGrouped
           })
         .afterClosed()
         .pipe(
@@ -70,6 +79,12 @@ export class DauerauftragGroupedListComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subsciptions.add(this.loadData().subscribe());
+
+    this.subsciptions.add(
+      this.backendService.backendReachable.subscribe((x: boolean) => {
+        this.disableButton = !x;
+      })
+    );
   }
 
   public ngOnDestroy(): void {
