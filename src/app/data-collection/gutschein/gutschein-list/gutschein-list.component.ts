@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { tap, finalize, switchMap } from 'rxjs/operators';
 import { Gutschein } from 'src/app/shared/models/gutschein';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { BackendService } from 'src/app/shared/services/backend.service';
 import { GutscheinEditComponent } from '../gutschein-edit/gutschein-edit.component';
 
 @Component({
@@ -23,9 +24,12 @@ export class GutscheinListComponent implements OnInit, OnDestroy {
 
   public loaded = false;
 
+  public disableButton = true;
+
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly backendService: BackendService
   ) { }
 
   private load(): Observable<Gutschein[]> {
@@ -82,6 +86,12 @@ export class GutscheinListComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.subscriptions.add(
       this.load().subscribe()
+    );
+
+    this.subscriptions.add(
+      this.backendService.backendReachable.subscribe((x: boolean) => {
+        this.disableButton = !x;
+      })
     );
   }
 
