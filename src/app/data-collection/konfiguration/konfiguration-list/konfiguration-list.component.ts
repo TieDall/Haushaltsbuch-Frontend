@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
-import { finalize, switchMap, tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, of, Subscription } from 'rxjs';
+import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { Konfiguration } from 'src/app/shared/models/konfiguration';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { KonfigurationEditComponent } from '../konfiguration-edit/konfiguration-edit.component';
@@ -25,7 +26,8 @@ export class KonfigurationListComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly snackBar: MatSnackBar
   ) { }
 
   private loadData(): Observable<Konfiguration[]> {
@@ -35,6 +37,10 @@ export class KonfigurationListComponent implements OnInit, OnDestroy {
       .pipe(
         tap((konfigurationen: Konfiguration[]) => {
           this.data = konfigurationen.sort((a, b) => a.parameter.localeCompare(b.parameter));
+        }),
+        catchError(() => {
+          this.snackBar.open('Fehler beim Laden.', 'Ok', {duration: 3000});
+          return of([]);
         }),
         finalize(() => this.loaded = true)
       );

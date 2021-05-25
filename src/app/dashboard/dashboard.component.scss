@@ -13,3 +13,7 @@ mat-card-content mat-icon {
 .mat-card-link:hover {
   background-color: #f5f5f5;
 }
+
+.disabled-mat-card {
+  background-color: rgba(0,0,0,.12);
+}

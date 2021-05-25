@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
-import { tap, finalize, switchMap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, of, Subscription } from 'rxjs';
+import { tap, finalize, switchMap, catchError } from 'rxjs/operators';
 import { Ruecklage } from 'src/app/shared/models/ruecklage';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { BackendService } from 'src/app/shared/services/backend.service';
@@ -29,7 +30,8 @@ export class RuecklageListComponent implements OnInit, OnDestroy {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly dialog: MatDialog,
-    private readonly backendService: BackendService
+    private readonly backendService: BackendService,
+    private readonly snackBar: MatSnackBar
   ) { }
 
   private load(): Observable<Ruecklage[]> {
@@ -43,6 +45,10 @@ export class RuecklageListComponent implements OnInit, OnDestroy {
             bezeichnung: '',
             summe: ruecklage.reduce((acc, cur) => acc + cur.summe, 0)
           });
+        }),
+        catchError(() => {
+          this.snackBar.open('Fehler beim Laden.', 'Ok', {duration: 3000});
+          return of([]);
         }),
         finalize(() => this.loaded = true)
       );

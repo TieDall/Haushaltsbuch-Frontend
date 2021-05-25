@@ -9,7 +9,7 @@
 </div>
 
 <div class="row m-4">
-  <button mat-raised-button class="col" (click)="add()">
+  <button mat-raised-button class="col" (click)="add()" [disabled]="disableButton">
     <mat-icon>add</mat-icon>
   </button>
 </div>

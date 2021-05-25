@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { Report } from 'src/app/shared/models/report';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { BackendService } from 'src/app/shared/services/backend.service';
 import { ReportCreateDialogComponent } from '../report-create-dialog/report-create-dialog.component';
 
 @Component({
@@ -22,8 +23,11 @@ export class ReportOverviewComponent implements OnInit, OnDestroy {
 
   public loaded = false;
 
+  public disableButton = true;
+
   constructor(
     private readonly httpClient: HttpClient,
+    private readonly backendService: BackendService,
     private readonly matDialog: MatDialog
   ) { }
 
@@ -47,6 +51,12 @@ export class ReportOverviewComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscriptions.add(this.loadData().subscribe());
+
+    this.subscriptions.add(
+      this.backendService.backendReachable.subscribe((x: boolean) => {
+        this.disableButton = !x;
+      })
+    );
   }
 
   public ngOnDestroy(): void {

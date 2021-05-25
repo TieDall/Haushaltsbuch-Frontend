@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
-import { tap, finalize, switchMap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, of, Subscription } from 'rxjs';
+import { tap, finalize, switchMap, catchError } from 'rxjs/operators';
 import { Gutschein } from 'src/app/shared/models/gutschein';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { BackendService } from 'src/app/shared/services/backend.service';
@@ -29,7 +30,8 @@ export class GutscheinListComponent implements OnInit, OnDestroy {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly dialog: MatDialog,
-    private readonly backendService: BackendService
+    private readonly backendService: BackendService,
+    private readonly snackBar: MatSnackBar
   ) { }
 
   private load(): Observable<Gutschein[]> {
@@ -38,6 +40,10 @@ export class GutscheinListComponent implements OnInit, OnDestroy {
       .pipe(
         tap((gutscheine: Gutschein[]) => {
           this.data = gutscheine.sort((a, b) => new Date(b.ablaufdatum).getTime() - new Date(a.ablaufdatum).getTime());
+        }),
+        catchError(() => {
+          this.snackBar.open('Fehler beim Laden.', 'Ok', {duration: 3000});
+          return of([]);
         }),
         finalize(() => this.loaded = true)
       );

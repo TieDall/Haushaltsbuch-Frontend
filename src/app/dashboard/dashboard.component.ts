@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AppConfigService } from '../shared/services/app-config.service';
+import { BackendService } from '../shared/services/backend.service';
 import { ResetDatabaseDialogComponent } from './reset-database-dialog/reset-database-dialog.component';
 
 @Component({
@@ -17,9 +18,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private readonly url = `${AppConfigService.appConfig.apiServer.url}Konfiguration`;
 
+  public disableCard = true;
+
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly backendService: BackendService
   ) { }
 
   public resetDatabase() {
@@ -32,6 +36,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.subscriptions.add(
+      this.backendService.backendReachable.subscribe((x: boolean) => {
+        this.disableCard = !x;
+      })
+    );
   }
 
   public ngOnDestroy(): void {
