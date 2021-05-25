@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { tap, finalize, switchMap } from 'rxjs/operators';
 import { Ruecklage } from 'src/app/shared/models/ruecklage';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { BackendService } from 'src/app/shared/services/backend.service';
 import { RuecklageEditComponent } from '../ruecklage-edit/ruecklage-edit.component';
 
 @Component({
@@ -23,9 +24,12 @@ export class RuecklageListComponent implements OnInit, OnDestroy {
 
   public loaded = false;
 
+  public disableButton = true;
+
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly backendService: BackendService
   ) { }
 
   private load(): Observable<Ruecklage[]> {
@@ -87,6 +91,12 @@ export class RuecklageListComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.subscriptions.add(
       this.load().subscribe()
+    );
+
+    this.subscriptions.add(
+      this.backendService.backendReachable.subscribe((x: boolean) => {
+        this.disableButton = !x;
+      })
     );
   }
 
