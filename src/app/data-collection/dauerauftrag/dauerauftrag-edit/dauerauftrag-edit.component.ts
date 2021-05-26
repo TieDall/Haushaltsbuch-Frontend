@@ -64,13 +64,15 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
   }
 
   private loadKategorien(isEinnahme: boolean): Observable<Kategorie[]> {
+    this.spinnerOverlayService.show();
     return this.httpClient.get<Kategorie[]>(this.kategorieUrl)
       .pipe(
         tap((kategorien: Kategorie[]) => {
           this.kategorienSelect = kategorien
             .filter((kategorie: Kategorie) => kategorie.isEinnahme === isEinnahme)
             .sort((a, b) => a.bezeichnung.localeCompare(b.bezeichnung));
-        })
+        }),
+        finalize(() => this.spinnerOverlayService.hide())
       );
   }
 

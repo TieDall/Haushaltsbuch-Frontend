@@ -46,13 +46,15 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
   }
 
   private loadKategorien(isEinnahme: boolean): Observable<any> {
+    this.spinnerOverlayService.show();
     return this.httpClient.get<Kategorie[]>(this.kategorieUrl)
       .pipe(
         tap((kategorien: Kategorie[]) => {
           this.kategorienSelect = kategorien
             .filter(kategorien => kategorien.isEinnahme === isEinnahme)
             .sort((a, b) => a.bezeichnung.localeCompare(b.bezeichnung));
-        })
+        }),
+        finalize(() => this.spinnerOverlayService.hide())
       );
   }
 
