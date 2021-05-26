@@ -7,6 +7,7 @@ import { DeleteInterceptor } from './interceptor/delete.interceptor';
 import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { BackendComponent } from './components/backend/backend.component';
 import { BackendInterceptor } from './interceptor/backend.interceptor';
+import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-overlay.component';
 
 
 
@@ -14,7 +15,8 @@ import { BackendInterceptor } from './interceptor/backend.interceptor';
   declarations: [
     BtnBuchungComponent,
     ConfirmDeleteDialogComponent,
-    BackendComponent
+    BackendComponent,
+    SpinnerOverlayComponent
   ],
   exports: [
     BtnBuchungComponent,

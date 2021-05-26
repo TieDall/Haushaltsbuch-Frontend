@@ -6,12 +6,13 @@ import { MatRadioChange } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { Observable, of, Subscription } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, finalize, map, tap } from 'rxjs/operators';
 import { Dauerauftrag } from 'src/app/shared/models/dauerauftrag';
 import { Intervall } from 'src/app/shared/models/intervall';
 import { IntervallLabel } from 'src/app/shared/models/intervall-labels';
 import { Kategorie } from 'src/app/shared/models/kategorie';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { SpinnerOverlayService } from 'src/app/shared/services/spinner-overlay.service';
 
 @Component({
   selector: 'app-dauerauftrag-edit',
@@ -47,6 +48,7 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
     private readonly formBuilder: FormBuilder,
     private readonly httpClient: HttpClient,
     private readonly snackBar: MatSnackBar,
+    private readonly spinnerOverlayService: SpinnerOverlayService,
     public dialogRef: MatDialogRef<DauerauftragEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Dauerauftrag
   ) {
@@ -91,6 +93,8 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
   }
 
   public save() {
+    this.spinnerOverlayService.show();
+
     if (!this.data || this.data.id === 0) {
       this.data = new Dauerauftrag();
     }
@@ -114,7 +118,8 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
         .put(this.url + '/' + this.data.id, this.data)
         .pipe(
           map(() => true),
-          catchError(() => of(false))
+          catchError(() => of(false)),
+          finalize(() => this.spinnerOverlayService.hide())
         )
         .subscribe((isSuccess: boolean) => {
           if (isSuccess) {
@@ -129,7 +134,8 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
         .post(this.url, this.data)
         .pipe(
           map(() => true),
-          catchError(() => of(false))
+          catchError(() => of(false)),
+          finalize(() => this.spinnerOverlayService.hide())
         )
         .subscribe((isSuccess: boolean) => {
           if (isSuccess) {

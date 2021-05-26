@@ -6,10 +6,11 @@ import { MatRadioChange } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { Observable, of, Subscription } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, finalize, map, tap } from 'rxjs/operators';
 import { Buchung } from 'src/app/shared/models/buchung';
 import { Kategorie } from 'src/app/shared/models/kategorie';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { SpinnerOverlayService } from 'src/app/shared/services/spinner-overlay.service';
 
 @Component({
   selector: 'app-buchung-edit',
@@ -30,6 +31,7 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
     private readonly formBuilder: FormBuilder,
     private readonly httpClient: HttpClient,
     private readonly snackBar: MatSnackBar,
+    private readonly spinnerOverlayService: SpinnerOverlayService,
     public dialogRef: MatDialogRef<BuchungEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Buchung
   ) {
@@ -102,6 +104,8 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
   }
 
   public save() {
+    this.spinnerOverlayService.show();
+
     if (!this.data) {
       this.data = new Buchung();
     }
@@ -117,7 +121,8 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
         .put(`${this.url}/${this.data.id}`, this.data)
         .pipe(
           map(() => true),
-          catchError(() => of(false))
+          catchError(() => of(false)),
+          finalize(() => this.spinnerOverlayService.hide())
         )
         .subscribe((isSuccess: boolean) => {
           if (isSuccess) {
@@ -132,7 +137,8 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
         .post(this.url, this.data)
         .pipe(
           map(() => true),
-          catchError(() => of(false))
+          catchError(() => of(false)),
+          finalize(() => this.spinnerOverlayService.hide())
         )
         .subscribe((isSuccess: boolean) => {
           if (isSuccess) {

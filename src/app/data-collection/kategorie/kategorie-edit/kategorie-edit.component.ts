@@ -4,9 +4,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of, Subscription } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, finalize } from 'rxjs/operators';
 import { Kategorie } from 'src/app/shared/models/kategorie';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { SpinnerOverlayService } from 'src/app/shared/services/spinner-overlay.service';
 
 @Component({
   selector: 'app-kategorie-edit',
@@ -25,6 +26,7 @@ export class KategorieEditComponent implements OnInit, OnDestroy {
     private readonly formBuilder: FormBuilder,
     private readonly httpClient: HttpClient,
     private readonly snackBar: MatSnackBar,
+    private readonly spinnerOverlayService: SpinnerOverlayService,
     public dialogRef: MatDialogRef<KategorieEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Kategorie
   ) {
@@ -55,6 +57,8 @@ export class KategorieEditComponent implements OnInit, OnDestroy {
   }
 
   public save() {
+    this.spinnerOverlayService.show();
+
     if (!this.data) {
       this.data = new Kategorie();
     }
@@ -67,7 +71,8 @@ export class KategorieEditComponent implements OnInit, OnDestroy {
         .put(`${this.url}/${this.data.id}`, this.data)
         .pipe(
           map(() => true),
-          catchError(() => of(false))
+          catchError(() => of(false)),
+          finalize(() => this.spinnerOverlayService.hide())
         )
         .subscribe((isSuccess: boolean) => {
           if (isSuccess) {
@@ -82,7 +87,8 @@ export class KategorieEditComponent implements OnInit, OnDestroy {
         .post(this.url, this.data)
         .pipe(
           map(() => true),
-          catchError(() => of(false))
+          catchError(() => of(false)),
+          finalize(() => this.spinnerOverlayService.hide())
         )
         .subscribe((isSuccess: boolean) => {
           if (isSuccess) {
