@@ -1,5 +1,4 @@
-[![CI](https://github.com/TieDall/Haushaltsbuch-Frontend/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/TieDall/Haushaltsbuch-Frontend/actions/workflows/ci.yml)
-[![CI](https://github.com/TieDall/Haushaltsbuch-Frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/TieDall/Haushaltsbuch-Frontend/actions/workflows/ci.yml)
+[![Build](https://github.com/TieDall/Haushaltsbuch-Frontend/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/TieDall/Haushaltsbuch-Frontend/actions/workflows/build.yml)
 
 # Getting Started
 
