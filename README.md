@@ -1,3 +1,5 @@
+[![CI](https://github.com/TieDall/Haushaltsbuch-Frontend/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/TieDall/Haushaltsbuch-Frontend/actions/workflows/ci.yml)
+
 # Getting Started
 
 ## Installation
