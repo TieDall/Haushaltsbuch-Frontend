@@ -27,6 +27,8 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public kategorienSelect: Kategorie[] = [];
 
+  public showKategorieSpinner = true;
+
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly httpClient: HttpClient,
@@ -46,7 +48,9 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
   }
 
   private loadKategorien(isEinnahme: boolean): Observable<any> {
-    this.spinnerOverlayService.show();
+    this.showKategorieSpinner = true;
+    this.form.get('kategorie').disable();
+    this.form.get('kategorie').reset();
     return this.httpClient.get<Kategorie[]>(this.kategorieUrl)
       .pipe(
         tap((kategorien: Kategorie[]) => {
@@ -54,7 +58,7 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
             .filter(kategorien => kategorien.isEinnahme === isEinnahme)
             .sort((a, b) => a.bezeichnung.localeCompare(b.bezeichnung));
         }),
-        finalize(() => this.spinnerOverlayService.hide())
+        finalize(() => setTimeout(() => { this.showKategorieSpinner = false; this.form.get('kategorie').enable(); }, 200) )
       );
   }
 

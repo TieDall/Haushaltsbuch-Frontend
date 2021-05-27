@@ -44,6 +44,8 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
     }
   ];
 
+  public showKategorieSpinner = true;
+
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly httpClient: HttpClient,
@@ -56,7 +58,6 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
   }
 
   public typChanged(event: MatRadioChange) {
-    console.log(this.form);
     this.form.get('kategorie').setValue(null);
     this.subscriptions.add(
       this.loadKategorien(event.value === 'einnahme')
@@ -64,7 +65,9 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
   }
 
   private loadKategorien(isEinnahme: boolean): Observable<Kategorie[]> {
-    this.spinnerOverlayService.show();
+    this.showKategorieSpinner = true;
+    this.form.get('kategorie').disable();
+    this.form.get('kategorie').reset();
     return this.httpClient.get<Kategorie[]>(this.kategorieUrl)
       .pipe(
         tap((kategorien: Kategorie[]) => {
@@ -72,7 +75,7 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
             .filter((kategorie: Kategorie) => kategorie.isEinnahme === isEinnahme)
             .sort((a, b) => a.bezeichnung.localeCompare(b.bezeichnung));
         }),
-        finalize(() => this.spinnerOverlayService.hide())
+        finalize(() => setTimeout(() => { this.showKategorieSpinner = false; this.form.get('kategorie').enable(); }, 200) )
       );
   }
 
@@ -177,6 +180,9 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
         {
           value: this.data?.kategorie,
           disabled: false
+        },
+        {
+          validators: [Validators.required]
         }
       ],
       intervall: [

@@ -46,7 +46,8 @@
 
     <mat-form-field appearance="outline" class="d-block">
       <mat-label>Kategorie</mat-label>
-      <mat-select formControlName="kategorie" [compareWith]="compareKategorien">
+      <span *ngIf="showKategorieSpinner" matPrefix><mat-spinner [diameter]="25"></mat-spinner> &nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <mat-select formControlName="kategorie" [compareWith]="compareKategorien" required>
         <mat-select-trigger>
           <mat-icon>{{ this.form.get("kategorie").value?.icon }}</mat-icon
           >&nbsp;{{ this.form.get("kategorie").value?.bezeichnung }}
