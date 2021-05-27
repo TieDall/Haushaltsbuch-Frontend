@@ -5,13 +5,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, catchError, finalize } from 'rxjs/operators';
 import { Report } from 'src/app/shared/models/report';
 import { ReportItem } from 'src/app/shared/models/report-item';
 import { ReportRow } from 'src/app/shared/models/report-row';
 import { ReportWidget } from 'src/app/shared/models/report-widget';
 import { ReportWidgetLabel } from 'src/app/shared/models/report-widget-labels';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { SpinnerOverlayService } from 'src/app/shared/services/spinner-overlay.service';
 import { ReportConfigDialogComponent } from '../report-config-dialog/report-config-dialog.component';
 import { ReportItemDialogComponent } from '../report-item-dialog/report-item-dialog.component';
 import { ReportRowDialogComponent } from '../report-row-dialog/report-row-dialog.component';
@@ -38,7 +39,8 @@ export class ReportEditComponent implements OnInit, OnDestroy {
     private readonly matDialog: MatDialog,
     private readonly httpClient: HttpClient,
     private readonly router: Router,
-    private readonly snackBar: MatSnackBar
+    private readonly snackBar: MatSnackBar,
+    private readonly spinnerOverlayService: SpinnerOverlayService
   ) {
     this.report = this.activatedRoute.snapshot.data.report as Report;
 
@@ -48,14 +50,22 @@ export class ReportEditComponent implements OnInit, OnDestroy {
   }
 
   public save() {
+    this.spinnerOverlayService.show();
     this.report.bezeichnung = this.form.get('bezeichnung').value;
     this.subscriptions.add(
       this.httpClient
         .put(`${this.url}/${this.report.id}`, this.report)
-        .subscribe(() => {
-          this.snackBar.open('Speichern erfolgreich.', 'Okay', {
-            duration: 5000
-          });
+        .pipe(
+          map(() => true),
+          catchError(() => of(false)),
+          finalize(() => this.spinnerOverlayService.hide())
+        )
+        .subscribe((isSuccess: boolean) => {
+          if (isSuccess) {
+            this.snackBar.open('Speichern erfolgreich.', 'Ok', {duration: 2000});
+          } else {
+            this.snackBar.open('Speichern fehlgeschlagen.', 'Ok', {duration: 2000});
+          }
         }));
   }
 

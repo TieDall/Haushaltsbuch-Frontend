@@ -2,8 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { of, Subscription } from 'rxjs';
+import { catchError, finalize, map } from 'rxjs/operators';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { SpinnerOverlayService } from 'src/app/shared/services/spinner-overlay.service';
 
 @Component({
   selector: 'app-report-create-dialog',
@@ -21,6 +24,8 @@ export class ReportCreateDialogComponent implements OnInit, OnDestroy {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly httpClient: HttpClient,
+    private readonly snackBar: MatSnackBar,
+    private readonly spinnerOverlayService: SpinnerOverlayService,
     public dialogRef: MatDialogRef<ReportCreateDialogComponent>
   ) {
     this.initForm();
@@ -33,10 +38,23 @@ export class ReportCreateDialogComponent implements OnInit, OnDestroy {
   }
 
   public save() {
+    this.spinnerOverlayService.show();
     this.subscriptions.add(
       this.httpClient
         .post(`${this.url}/${this.form.value.bezeichnung}`, null)
-        .subscribe(() => this.dialogRef.close()));
+        .pipe(
+          map(() => true),
+          catchError(() => of(false)),
+          finalize(() => this.spinnerOverlayService.hide())
+        )
+        .subscribe((isSuccess: boolean) => {
+          if (isSuccess) {
+            this.snackBar.open('Speichern erfolgreich.', 'Ok', {duration: 2000});
+            this.dialogRef.close();
+          } else {
+            this.snackBar.open('Speichern fehlgeschlagen.', 'Ok', {duration: 2000});
+          }
+        }));
   }
 
   public ngOnInit(): void {
