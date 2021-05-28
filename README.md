@@ -1,5 +1,5 @@
 [![Build](https://github.com/TieDall/Haushaltsbuch-Frontend/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/TieDall/Haushaltsbuch-Frontend/actions/workflows/build.yml)
-https://img.shields.io/librariesio/github/TieDall/Haushaltsbuch-Frontend
+<img alt="Libraries.io dependency status for GitHub repo" src="https://img.shields.io/librariesio/github/TieDall/Haushaltsbuch-Frontend">
 
 # Getting Started
 
