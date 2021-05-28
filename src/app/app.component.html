@@ -1,9 +1,14 @@
 <mat-toolbar>
-  <h1 routerLink="/">Haushaltsbuch</h1>
-  <span class="flex-fill"></span>
-  <app-backend></app-backend>
-  <span class="flex-fill"></span>
-  <app-btn-buchung></app-btn-buchung>
+  <mat-toolbar-row>
+    <h1 routerLink="/">Haushaltsbuch</h1>
+    <span class="flex-fill"></span>
+    <app-btn-buchung></app-btn-buchung>
+  </mat-toolbar-row>
+  <mat-toolbar-row *ngIf="!isBackendReachable">
+    <span class="flex-fill"></span>
+    <app-backend></app-backend>
+    <span class="flex-fill"></span>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <div class="m-3">

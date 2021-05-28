@@ -1,7 +1,9 @@
-<p class="backend-label m-3">Backend:</p>
+<p class="backend-label m-3" *ngIf="!isBackendReachable"><i>Backend nicht erreichbar.</i></p>
+
+<!-- <p class="backend-label m-3">Backend:</p>
 <mat-icon
   class="backend-icon"
   [ngClass]="isBackendReachable ? 'aktiv' : 'inaktiv'"
 >
   fiber_manual_record
-</mat-icon>
+</mat-icon> -->
