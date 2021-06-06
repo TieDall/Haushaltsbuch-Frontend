@@ -68,6 +68,14 @@
       <mat-icon>restart_alt</mat-icon>
     </mat-card-content>
   </mat-card>
+  <mat-card class="col m-2" (click)="import_export()" [ngClass]="disableCard ? 'disabled-mat-card' : 'mat-card-link'">
+    <mat-card-header>
+      <mat-card-title>Import / Export</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-icon>restart_alt</mat-icon>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <h2>Report</h2>

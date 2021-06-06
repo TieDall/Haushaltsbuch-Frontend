@@ -39,6 +39,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         .subscribe());
   }
 
+  public import_export() {}
+
   public ngOnInit(): void {
     this.subscriptions.add(
       this.backendService.backendReachable.subscribe((x: boolean) => {
