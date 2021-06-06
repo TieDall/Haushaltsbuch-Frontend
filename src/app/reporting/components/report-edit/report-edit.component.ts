@@ -89,7 +89,9 @@ export class ReportEditComponent implements OnInit, OnDestroy {
             config: null,
             reportRow: null,
             reportRowId: 0,
-            reportWidget: null
+            reportWidget: null,
+            created: null,
+            changed: null
           });
         }
 
@@ -98,7 +100,9 @@ export class ReportEditComponent implements OnInit, OnDestroy {
           reportId: this.report.id,
           id: 0,
           report: null,
-          reportItems
+          reportItems,
+          created: null,
+          changed: null
         });
       }));
   }

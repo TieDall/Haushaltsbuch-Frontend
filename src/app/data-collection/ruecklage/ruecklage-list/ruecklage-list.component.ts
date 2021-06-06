@@ -43,7 +43,9 @@ export class RuecklageListComponent implements OnInit, OnDestroy {
           this.data.push({
             id: 0,
             bezeichnung: '',
-            summe: ruecklage.reduce((acc, cur) => acc + cur.summe, 0)
+            summe: ruecklage.reduce((acc, cur) => acc + cur.summe, 0),
+            changed: null,
+            created: null
           });
         }),
         catchError(() => {
