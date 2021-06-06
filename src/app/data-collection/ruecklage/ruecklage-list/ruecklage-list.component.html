@@ -28,6 +28,7 @@
           mat-cell
           *matCellDef="let element"
           [ngClass]="element.id === 0 ? 'summe' : ''"
+          class="align-right"
         >
           {{ element.summe | currency }}
         </td>

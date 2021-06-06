@@ -47,7 +47,7 @@
 
       <ng-container matColumnDef="betrag">
         <th mat-header-cell *matHeaderCellDef>Betrag</th>
-        <td mat-cell *matCellDef="let element">
+        <td mat-cell *matCellDef="let element" class="align-right">
           {{ element.betrag | currency }}
         </td>
       </ng-container>

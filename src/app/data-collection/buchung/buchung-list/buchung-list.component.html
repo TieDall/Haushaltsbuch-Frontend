@@ -73,6 +73,7 @@
           *matCellDef="let element"
           [ngClass]="element.isEinnahme ? 'einnahme' : 'ausgabe'"
           (click)="edit(element)"
+          class="align-right"
         >
           {{ element.isEinnahme ? "" : "-" }}{{ element.betrag | currency }}
         </td>
