@@ -1,1 +1,15 @@
-<p>backup-dialog works!</p>
+<h2 mat-dialog-title>Import / Export</h2>
+<mat-dialog-content>
+  <div class="row m-1">
+    <p class="col m-2">Export:</p>
+    <button mat-raised-button (click)="export()">
+      <mat-icon>download</mat-icon>Download
+    </button>
+  </div>
+  <div class="row m-1">
+    <p class="col m-2">Import:</p>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Abbrechen</button>
+</mat-dialog-actions>
