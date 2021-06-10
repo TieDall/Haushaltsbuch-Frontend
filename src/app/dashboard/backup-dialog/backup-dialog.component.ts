@@ -42,6 +42,18 @@ export class BackupDialogComponent implements OnInit, OnDestroy {
     );
   }
 
+  public onFileSelected(event) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+        const fileName = file.name;
+        const formData = new FormData();
+        formData.append('file', file);
+
+        this.subscriptions.add(this.httpClient.post(`${this.url}/Import`, formData).subscribe());
+    }
+  }
+
   public ngOnInit(): void {
   }
 
