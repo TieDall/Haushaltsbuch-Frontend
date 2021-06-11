@@ -6,6 +6,7 @@ import { delay, finalize, switchMap } from 'rxjs/operators';
 import { AppConfigService } from '../shared/services/app-config.service';
 import { BackendService } from '../shared/services/backend.service';
 import { SpinnerOverlayService } from '../shared/services/spinner-overlay.service';
+import { BackupDialogComponent } from './backup-dialog/backup-dialog.component';
 import { ResetDatabaseDialogComponent } from './reset-database-dialog/reset-database-dialog.component';
 
 @Component({
@@ -36,6 +37,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
           switchMap((contineReset: boolean) => contineReset ? this.httpClient.post(`${this.url}/ResetDatabase`, null) : of([])),
           finalize(() => this.spinnerOverlayService.hide())
         )
+        .subscribe());
+  }
+
+  public import_export() {
+    this.subscriptions.add(
+      this.dialog.open(BackupDialogComponent).afterClosed()
         .subscribe());
   }
 
