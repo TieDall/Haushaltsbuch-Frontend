@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -207,6 +208,20 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
         }
       ]
     });
+  }
+
+  public chosenMonthHandlerBeginn(value: any, datepicker: MatDatepicker<moment.Moment>) {
+    const date = moment(value);
+    date.date(1);
+    datepicker.close();
+    this.form.get('beginn').setValue(date.toDate());
+  }
+
+  public chosenMonthHandlerEnde(value: any, datepicker: MatDatepicker<moment.Moment>) {
+    const date = moment(value);
+    date.date(date.daysInMonth());
+    datepicker.close();
+    this.form.get('ende').setValue(date.toDate());
   }
 
   public ngOnInit(): void {

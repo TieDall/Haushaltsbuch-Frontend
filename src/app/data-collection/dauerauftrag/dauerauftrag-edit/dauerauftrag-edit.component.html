@@ -88,7 +88,9 @@
         [matDatepicker]="pickerbeginn"
       />
       <mat-datepicker-toggle matSuffix [for]="pickerbeginn"></mat-datepicker-toggle>
-      <mat-datepicker #pickerbeginn></mat-datepicker>
+      <mat-datepicker #pickerbeginn
+        startView="multi-year"
+        (monthSelected)="chosenMonthHandlerBeginn($event, pickerbeginn)"></mat-datepicker>
       <mat-error *ngIf="this.form.get('beginn').hasError('required')">
         Bitte ausfüllen.
       </mat-error>
@@ -99,13 +101,15 @@
       <input
         matInput
         placeholder="Ende"
-        required
         formControlName="ende"
         [matDatepicker]="pickerende"
       />
       <mat-datepicker-toggle matSuffix [for]="pickerende"></mat-datepicker-toggle>
-      <mat-datepicker #pickerende></mat-datepicker>
+      <mat-datepicker #pickerende
+        startView="multi-year"
+        (monthSelected)="chosenMonthHandlerEnde($event, pickerende)"></mat-datepicker>
     </mat-form-field>
+
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
