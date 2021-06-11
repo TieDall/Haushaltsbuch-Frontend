@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BackupResult } from 'src/app/shared/models/backup-result';
 
 @Component({
   selector: 'app-backup-result-dialog',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BackupResultDialogComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public dialogRef: MatDialogRef<BackupResultDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: BackupResult
+  ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
 }

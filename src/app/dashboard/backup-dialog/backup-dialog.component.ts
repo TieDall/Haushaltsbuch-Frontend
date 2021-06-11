@@ -3,9 +3,11 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { MatDialog } from '@angular/material/dialog';
 import { of, Subscription } from 'rxjs';
 import { finalize, switchMap } from 'rxjs/operators';
+import { BackupResult } from 'src/app/shared/models/backup-result';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { SpinnerOverlayService } from 'src/app/shared/services/spinner-overlay.service';
 import { BackupConfirmDialogComponent } from '../backup-confirm-dialog/backup-confirm-dialog.component';
+import { BackupResultDialogComponent } from '../backup-result-dialog/backup-result-dialog.component';
 
 @Component({
   selector: 'app-backup-dialog',
@@ -75,7 +77,9 @@ export class BackupDialogComponent implements OnInit, OnDestroy {
                 this.spinnerOverlayService.hide();
               })
             )
-            .subscribe());
+            .subscribe((backupResult: BackupResult) => {
+              this.dialog.open(BackupResultDialogComponent, {data: backupResult}).afterClosed().subscribe();
+            }));
     }
   }
 
