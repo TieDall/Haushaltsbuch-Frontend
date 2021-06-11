@@ -1,9 +1,11 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { of, Subscription } from 'rxjs';
+import { finalize, switchMap } from 'rxjs/operators';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { SpinnerOverlayService } from 'src/app/shared/services/spinner-overlay.service';
+import { BackupConfirmDialogComponent } from '../backup-confirm-dialog/backup-confirm-dialog.component';
 
 @Component({
   selector: 'app-backup-dialog',
@@ -20,6 +22,7 @@ export class BackupDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly httpClient: HttpClient,
+    private readonly dialog: MatDialog,
     private readonly spinnerOverlayService: SpinnerOverlayService
   ) { }
 
@@ -60,20 +63,19 @@ export class BackupDialogComponent implements OnInit, OnDestroy {
     const file: File = event.target.files[0];
 
     if (file) {
-        const fileName = file.name;
         const formData = new FormData();
         formData.append('file', file);
 
         this.subscriptions.add(
-          this.httpClient.post(`${this.url}/Import`, formData)
+          this.dialog.open(BackupConfirmDialogComponent).afterClosed()
             .pipe(
+              switchMap((continueImport: boolean) => continueImport ? this.httpClient.post(`${this.url}/Import`, formData) : of([])),
               finalize(() => {
                 this.fileUploadField.nativeElement.value = '';
                 this.spinnerOverlayService.hide();
               })
             )
-            .subscribe()
-        );
+            .subscribe());
     }
   }
 
