@@ -79,18 +79,32 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="d-block">
-      <mat-label>Zeitraum</mat-label>
-      <mat-date-range-input [rangePicker]="picker">
-        <input
-          matStartDate
-          placeholder="Start"
-          required
-          formControlName="beginn"
-        />
-        <input matEndDate placeholder="Ende" formControlName="ende" />
-      </mat-date-range-input>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
+      <mat-label>Beginn</mat-label>
+      <input
+        matInput
+        placeholder="Beginn"
+        required
+        formControlName="beginn"
+        [matDatepicker]="pickerbeginn"
+      />
+      <mat-datepicker-toggle matSuffix [for]="pickerbeginn"></mat-datepicker-toggle>
+      <mat-datepicker #pickerbeginn></mat-datepicker>
+      <mat-error *ngIf="this.form.get('beginn').hasError('required')">
+        Bitte ausfüllen.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="d-block">
+      <mat-label>Ende</mat-label>
+      <input
+        matInput
+        placeholder="Ende"
+        required
+        formControlName="ende"
+        [matDatepicker]="pickerende"
+      />
+      <mat-datepicker-toggle matSuffix [for]="pickerende"></mat-datepicker-toggle>
+      <mat-datepicker #pickerende></mat-datepicker>
     </mat-form-field>
   </form>
 </mat-dialog-content>
