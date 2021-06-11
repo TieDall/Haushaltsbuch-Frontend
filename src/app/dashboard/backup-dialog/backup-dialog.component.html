@@ -1,14 +1,20 @@
 <h2 mat-dialog-title>Import / Export</h2>
 <mat-dialog-content>
-  <div class="row m-1">
-    <p class="col m-2">Export:</p>
-    <button mat-raised-button (click)="export()">
+  <div class="row m-2">
+    <p class="col">Export:</p>
+    <button class="col" mat-raised-button (click)="export()" color="primary">
       <mat-icon>download</mat-icon>Download
     </button>
   </div>
-  <div class="row m-1">
-    <p class="col m-2">Import:</p>
-    <input class="col m-2" type="file" (change)="onFileSelected($event)">
+  <div class="row m-2">
+    <p class="col">Import:</p>
+    <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+    <div class="file-upload">
+      <button mat-raised-button color="primary" class="upload-btn"
+        (click)="fileUpload.click()">
+        <mat-icon>upload</mat-icon>Upload
+      </button>
+    </div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

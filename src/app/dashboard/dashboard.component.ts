@@ -41,12 +41,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   public import_export() {
-    this.spinnerOverlayService.show();
     this.subscriptions.add(
       this.dialog.open(BackupDialogComponent).afterClosed()
-        .pipe(
-          finalize(() => this.spinnerOverlayService.hide())
-        )
         .subscribe());
   }
 
