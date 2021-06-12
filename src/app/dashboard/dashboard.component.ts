@@ -30,20 +30,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) { }
 
   public resetDatabase() {
-    this.spinnerOverlayService.show();
-    this.subscriptions.add(
-      this.dialog.open(ResetDatabaseDialogComponent, {disableClose: true}).afterClosed()
-        .pipe(
-          switchMap((contineReset: boolean) => contineReset ? this.httpClient.post(`${this.url}/ResetDatabase`, null) : of([])),
-          finalize(() => this.spinnerOverlayService.hide())
-        )
-        .subscribe());
+    if (!this.disableCard) {
+      this.spinnerOverlayService.show();
+      this.subscriptions.add(
+        this.dialog.open(ResetDatabaseDialogComponent, {disableClose: true}).afterClosed()
+          .pipe(
+            switchMap((contineReset: boolean) => contineReset ? this.httpClient.post(`${this.url}/ResetDatabase`, null) : of([])),
+            finalize(() => this.spinnerOverlayService.hide())
+          )
+          .subscribe());
+    }
   }
 
   public import_export() {
-    this.subscriptions.add(
-      this.dialog.open(BackupDialogComponent).afterClosed()
-        .subscribe());
+    if (!this.disableCard) {
+      this.subscriptions.add(
+        this.dialog.open(BackupDialogComponent).afterClosed()
+          .subscribe());
+    }
   }
 
   public ngOnInit(): void {
