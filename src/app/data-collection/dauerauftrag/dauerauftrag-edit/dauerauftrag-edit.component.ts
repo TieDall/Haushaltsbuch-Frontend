@@ -65,10 +65,12 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
         .subscribe());
   }
 
-  private loadKategorien(isEinnahme: boolean): Observable<Kategorie[]> {
+  private loadKategorien(isEinnahme: boolean, dontReset = false): Observable<Kategorie[]> {
     this.showKategorieSpinner = true;
     this.form.get('kategorie').disable();
-    this.form.get('kategorie').reset();
+    if (!dontReset) {
+      this.form.get('kategorie').reset();
+    }
     return this.httpClient.get<Kategorie[]>(this.kategorieUrl)
       .pipe(
         tap((kategorien: Kategorie[]) => {
@@ -226,7 +228,7 @@ export class DauerauftragEditComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscriptions.add(
-      this.loadKategorien(this.data?.isEinnahme ?? false).subscribe()
+      this.loadKategorien(this.data?.isEinnahme ?? false, true).subscribe()
     );
   }
 
