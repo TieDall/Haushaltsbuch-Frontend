@@ -47,10 +47,12 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
         .subscribe());
   }
 
-  private loadKategorien(isEinnahme: boolean): Observable<any> {
+  private loadKategorien(isEinnahme: boolean, dontReset = false): Observable<any> {
     this.showKategorieSpinner = true;
     this.form.get('kategorie').disable();
-    this.form.get('kategorie').reset();
+    if (!dontReset) {
+      this.form.get('kategorie').reset();
+    }
     return this.httpClient.get<Kategorie[]>(this.kategorieUrl)
       .pipe(
         tap((kategorien: Kategorie[]) => {
@@ -159,7 +161,7 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscriptions.add(
-      this.loadKategorien(this.data?.isEinnahme ?? false).subscribe()
+      this.loadKategorien(this.data?.isEinnahme ?? false, true).subscribe()
     );
   }
 
