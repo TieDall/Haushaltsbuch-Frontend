@@ -26,6 +26,7 @@ export class GutscheinListComponent implements OnInit, OnDestroy {
   public loaded = false;
 
   public disableButton = true;
+  public hideAblaufdatum = false;
 
   constructor(
     private readonly httpClient: HttpClient,
@@ -99,6 +100,8 @@ export class GutscheinListComponent implements OnInit, OnDestroy {
         this.disableButton = !x;
       })
     );
+
+    this.hideAblaufdatum = document.body.clientWidth <= 400;
   }
 
   public ngOnDestroy(): void {

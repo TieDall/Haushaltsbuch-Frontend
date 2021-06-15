@@ -51,9 +51,10 @@
           {{ element.betrag | currency }}
         </td>
       </ng-container>
-      <ng-container matColumnDef="ablaufdatum">
-        <th mat-header-cell *matHeaderCellDef>Ablaufdatum</th>
-        <td mat-cell *matCellDef="let element">
+
+      <ng-container matColumnDef="ablaufdatum" >
+        <th mat-header-cell *matHeaderCellDef [hidden]="hideAblaufdatum">Ablaufdatum</th>
+        <td mat-cell *matCellDef="let element" [hidden]="hideAblaufdatum">
           {{ element.ablaufdatum | date }}
         </td>
       </ng-container>
