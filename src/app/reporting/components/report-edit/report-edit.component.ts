@@ -90,8 +90,8 @@ export class ReportEditComponent implements OnInit, OnDestroy {
             reportRow: null,
             reportRowId: 0,
             reportWidget: null,
-            created: null,
-            changed: null
+            created: new Date(),
+            changed: new Date()
           });
         }
 
@@ -101,8 +101,8 @@ export class ReportEditComponent implements OnInit, OnDestroy {
           id: 0,
           report: null,
           reportItems,
-          created: null,
-          changed: null
+          created: new Date(),
+          changed: new Date()
         });
       }));
   }
