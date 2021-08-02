@@ -18,6 +18,8 @@ export class ReportWidgetMonatsbilanzComponent implements OnInit, OnDestroy {
 
   @Output() loaded = new EventEmitter<boolean>();
 
+  public isSelfLoaded = false;
+
   private readonly subscriptions = new Subscription();
 
   private readonly urlBuchung = `${AppConfigService.appConfig.apiServer.url}Buchung/GetBuchungenByMonth`;
@@ -131,7 +133,10 @@ export class ReportWidgetMonatsbilanzComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.loaded.subscribe((isLoaded: boolean) => this.isSelfLoaded = isLoaded);
+
     this.loaded.emit(false);
+
     this.subscriptions.add(
       this.loadData(moment().month() + 1, moment().year())
         .pipe(
@@ -143,8 +148,10 @@ export class ReportWidgetMonatsbilanzComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.reportMonthService.subject
         .pipe(
+          tap(() => this.loaded.emit(false)),
           switchMap((x: { month: number, year: number }) => this.loadData(x.month, x.year)),
-          tap(() => this.setGraph(this.einnahmenFix, this.einnahmenVar, this.ausgabenFix, this.ausgabenVar))
+          tap(() => this.setGraph(this.einnahmenFix, this.einnahmenVar, this.ausgabenFix, this.ausgabenVar)),
+          finalize(() => this.loaded.emit(false))
         )
         .subscribe()
     );

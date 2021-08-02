@@ -16,6 +16,8 @@ export class ReportWidgetMonatsdauerauftraegeComponent implements OnInit, OnDest
 
   @Output() loaded = new EventEmitter<boolean>();
 
+  public isSelfLoaded = false;
+
   private readonly subscriptions = new Subscription();
 
   private readonly urlDauerauftrag = `${AppConfigService.appConfig.apiServer.url}Dauerauftrag/GetDauerauftraegeByMonth`;
@@ -49,7 +51,10 @@ export class ReportWidgetMonatsdauerauftraegeComponent implements OnInit, OnDest
   }
 
   public ngOnInit(): void {
+    this.loaded.subscribe((isLoaded: boolean) => this.isSelfLoaded = isLoaded);
+
     this.loaded.emit(false);
+
     this.subscriptions.add(
       this.loadData(moment().month() + 1, moment().year())
         .subscribe()
@@ -58,7 +63,9 @@ export class ReportWidgetMonatsdauerauftraegeComponent implements OnInit, OnDest
     this.subscriptions.add(
       this.reportMonthService.subject
         .pipe(
-          switchMap((x: { month: number, year: number }) => this.loadData(x.month, x.year))
+          tap(() => this.loaded.emit(false)),
+          switchMap((x: { month: number, year: number }) => this.loadData(x.month, x.year)),
+          finalize(() => this.loaded.emit(false))
         )
         .subscribe()
     );
