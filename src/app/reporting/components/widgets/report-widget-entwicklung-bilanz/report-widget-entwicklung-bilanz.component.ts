@@ -19,6 +19,7 @@ export class ReportWidgetEntwicklungBilanzComponent implements OnInit, OnDestroy
 
   public data: number[] = [];
   public label: string[] = [];
+  public mainData = new Map<string, number>();
   public chartOptionEntwicklung: EChartsOption;
 
   constructor(
@@ -36,6 +37,14 @@ export class ReportWidgetEntwicklungBilanzComponent implements OnInit, OnDestroy
           tap((result: number[]) => {
             this.data = result;
             this.processChart();
+
+            for (let index = 0; index < this.data.length; index++) {
+              this.mainData.set(this.label[index], this.data[index]);
+            }
+
+            const sum = result.reduce((a, b) => a + b, 0);
+            const avg = (sum / result.length) || 0;
+            this.mainData.set('Durchschnitt', avg);
           })
         )
         .subscribe()
@@ -49,7 +58,8 @@ export class ReportWidgetEntwicklungBilanzComponent implements OnInit, OnDestroy
       `${(moment().add(-3, 'months').month() + 1)} / ${(moment().add(-3, 'months').year())}`,
       `${(moment().add(-2, 'months').month() + 1)} / ${(moment().add(-2, 'months').year())}`,
       `${(moment().add(-1, 'months').month() + 1)} / ${(moment().add(-1, 'months').year())}`,
-      `${(moment().month() + 1)} / ${(moment().year())}`
+      `${(moment().month() + 1)} / ${(moment().year())}`,
+      'Durchschnitt'
     ];
   }
 
