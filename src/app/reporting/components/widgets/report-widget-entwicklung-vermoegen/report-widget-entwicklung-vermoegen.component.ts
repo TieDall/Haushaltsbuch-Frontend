@@ -23,6 +23,7 @@ export class ReportWidgetEntwicklungVermoegenComponent implements OnInit, OnDest
 
   public data: number[] = [];
   public label: string[] = [];
+  public mainData = new Map<string, number>();
   public chartOptionEntwicklung: EChartsOption;
   public isInklVermoegen = false;
 
@@ -54,6 +55,10 @@ export class ReportWidgetEntwicklungVermoegenComponent implements OnInit, OnDest
             }
           }
           this.processChart();
+
+          for (let index = 0; index < this.data.length; index++) {
+            this.mainData.set(this.label[index], this.data[index]);
+          }
         })
       )
         .subscribe()

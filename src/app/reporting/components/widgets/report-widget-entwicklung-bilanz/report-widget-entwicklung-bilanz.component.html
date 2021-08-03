@@ -3,20 +3,28 @@
     <mat-card-title>Entwicklung Bilanz</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div class="row" echarts [options]="chartOptionEntwicklung"></div>
-    <div class="row table">
-      <table>
-        <tr>
-          <td *ngFor="let item of label">
-            {{ item }}
-          </td>
-        </tr>
-        <tr>
-          <td *ngFor="let item of data">
-            {{ item | currency }}
-          </td>
-        </tr>
-      </table>
+    <div class="row">
+      <div class="col-md col-sm-12 col-xs-12">
+        <div class="row" echarts [options]="chartOptionEntwicklung"></div>
+      </div>
+      <div class="col-md col-sm-12 col-xs-12">
+        <div class="row table">
+          <table>
+            <thead>
+              <tr>
+                <th>Monat</th>
+                <th>Bilanz</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of label">
+                <td>{{ item }}</td>
+                <td>{{ this.mainData.get(item) | currency }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </mat-card-content>
 </mat-card>

@@ -19,6 +19,8 @@ export class ReportWidgetMonatsausgabenComponent implements OnInit, OnDestroy {
   @Output() loaded = new EventEmitter<boolean>();
   @Input() config: string;
 
+  public isSelfLoaded = false;
+
   private readonly subscriptions = new Subscription();
 
   private readonly urlBuchung = `${AppConfigService.appConfig.apiServer.url}Buchung/GetBuchungenByMonth`;
@@ -163,43 +165,45 @@ export class ReportWidgetMonatsausgabenComponent implements OnInit, OnDestroy {
     if (!this.config) {
       return false;
     }
-    return JSON.parse(this.config)['showOptions'];
+    return JSON.parse(this.config).showOptions;
   }
 
   public showGraph(): boolean {
     if (!this.config) {
       return false;
     }
-    return JSON.parse(this.config)['displayGraph'];
+    return JSON.parse(this.config).displayGraph;
   }
 
   public showTable(): boolean {
     if (!this.config) {
       return false;
     }
-    return JSON.parse(this.config)['displayTable'];
+    return JSON.parse(this.config).displayTable;
   }
 
   public initFix(): boolean {
     if (!this.config) {
       return false;
     }
-    return JSON.parse(this.config)['initFix'];
+    return JSON.parse(this.config).initFix;
   }
 
   public initVar(): boolean {
     if (!this.config) {
       return false;
     }
-    return JSON.parse(this.config)['initVar'];
+    return JSON.parse(this.config).initVar;
   }
 
   public ngOnInit(): void {
+    this.loaded.subscribe((isLoaded: boolean) => this.isSelfLoaded = isLoaded);
+
     this.loaded.emit(false);
 
     if (this.config) {
-      this.variableChecked = JSON.parse(this.config)['initVar'];
-      this.fixeChecked = JSON.parse(this.config)['initFix'];
+      this.variableChecked = JSON.parse(this.config).initVar;
+      this.fixeChecked = JSON.parse(this.config).initFix;
     }
 
     if (this.variableChecked && !this.fixeChecked) {
@@ -213,6 +217,7 @@ export class ReportWidgetMonatsausgabenComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.reportMonthService.subject
         .pipe(
+          tap(() => this.loaded.emit(false)),
           tap((x: { month: number, year: number }) => {
             if (x.month !== 0) {
               this.currentMonth = x.month;
@@ -222,7 +227,8 @@ export class ReportWidgetMonatsausgabenComponent implements OnInit, OnDestroy {
             }
           }),
           switchMap(() => this.loadData()),
-          tap(() => this.setGraph())
+          tap(() => this.setGraph()),
+          finalize(() => this.loaded.emit(false))
         )
         .subscribe());
   }
