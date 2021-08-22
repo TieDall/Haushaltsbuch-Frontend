@@ -18,7 +18,8 @@ export class ReportWidgetEntwicklungBilanzComponent implements OnInit, OnDestroy
   private readonly url = `${AppConfigService.appConfig.apiServer.url}Auswertung/GetBilanz`;
 
   public data: number[] = [];
-  public label: string[] = [];
+  public labelGraph: string[] = [];
+  public labelTable: string[] = [];
   public mainData = new Map<string, number>();
   public chartOptionEntwicklung: EChartsOption;
 
@@ -39,7 +40,7 @@ export class ReportWidgetEntwicklungBilanzComponent implements OnInit, OnDestroy
             this.processChart();
 
             for (let index = 0; index < this.data.length; index++) {
-              this.mainData.set(this.label[index], this.data[index]);
+              this.mainData.set(this.labelTable[index], this.data[index]);
             }
 
             const sum = result.reduce((a, b) => a + b, 0);
@@ -52,15 +53,16 @@ export class ReportWidgetEntwicklungBilanzComponent implements OnInit, OnDestroy
   }
 
   private initLabel() {
-    this.label = [
+    this.labelGraph = [
       `${(moment().add(-5, 'months').month() + 1)} / ${(moment().add(-5, 'months').year())}`,
       `${(moment().add(-4, 'months').month() + 1)} / ${(moment().add(-4, 'months').year())}`,
       `${(moment().add(-3, 'months').month() + 1)} / ${(moment().add(-3, 'months').year())}`,
       `${(moment().add(-2, 'months').month() + 1)} / ${(moment().add(-2, 'months').year())}`,
       `${(moment().add(-1, 'months').month() + 1)} / ${(moment().add(-1, 'months').year())}`,
-      `${(moment().month() + 1)} / ${(moment().year())}`,
-      'Durchschnitt'
+      `${(moment().month() + 1)} / ${(moment().year())}`
     ];
+
+    this.labelTable = [...this.labelGraph, 'Durchschnitt'];
   }
 
   private processChart() {
@@ -74,7 +76,7 @@ export class ReportWidgetEntwicklungBilanzComponent implements OnInit, OnDestroy
       },
       xAxis: {
         type: 'category',
-        data: this.label,
+        data: this.labelGraph,
       },
       yAxis: {
         type: 'value',
