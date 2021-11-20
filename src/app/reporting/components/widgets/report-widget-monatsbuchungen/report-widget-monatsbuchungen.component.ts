@@ -31,7 +31,7 @@ export class ReportWidgetMonatsbuchungenComponent implements OnInit, OnDestroy {
   ) { }
 
   private loadData(year: number, month: number): Observable<Buchung[]> {
-    return this.httpClient.get<Buchung[]>(`${this.url}/GetBuchungenByMonth/${year}/${month}`)
+    return this.httpClient.get<Buchung[]>(`${this.url}/GetByMonth/${year}/${month}`)
       .pipe(
         tap((buchungen: Buchung[]) => {
           this.data = [];

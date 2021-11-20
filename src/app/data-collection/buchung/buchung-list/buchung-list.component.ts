@@ -48,7 +48,7 @@ export class BuchungListComponent implements OnInit, OnDestroy {
   private loadData(year: number, month: number): Observable<Buchung[]> {
     this.loaded = false;
     this.data = [];
-    return this.httpClient.get<Buchung[]>(`${this.url}/GetBuchungenByMonth/${year}/${month}`)
+    return this.httpClient.get<Buchung[]>(`${this.url}/GetByMonth/${year}/${month}`)
       .pipe(
         tap((buchungen: Buchung[]) => {
           this.data = buchungen.sort((a, b) => new Date(b.buchungstag).getTime() - new Date(a.buchungstag).getTime())

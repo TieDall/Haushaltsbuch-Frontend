@@ -22,7 +22,7 @@ export class ReportWidgetMonatsbilanzComponent implements OnInit, OnDestroy {
 
   private readonly subscriptions = new Subscription();
 
-  private readonly urlBuchung = `${AppConfigService.appConfig.apiServer.url}Buchung/GetBuchungenByMonth`;
+  private readonly urlBuchung = `${AppConfigService.appConfig.apiServer.url}Buchung/GetByMonth`;
   private readonly urlDauerauftrag = `${AppConfigService.appConfig.apiServer.url}Dauerauftrag/GetDauerauftraegeByMonth`;
 
   public bilanz = 0;
