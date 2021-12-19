@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>
+  Bitte wählen Sie ein Icon!
+</h2>
+<mat-dialog-content>
+  <mat-icon *ngFor="let icon of icons" (click)="close(icon)">{{icon.name}}</mat-icon>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Abbrechen</button>
+</mat-dialog-actions>
