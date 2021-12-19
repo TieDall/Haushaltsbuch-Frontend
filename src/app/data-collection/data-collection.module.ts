@@ -17,6 +17,7 @@ import { GutscheinEditComponent } from './gutschein/gutschein-edit/gutschein-edi
 import { RuecklageEditComponent } from './ruecklage/ruecklage-edit/ruecklage-edit.component';
 import { RuecklageListComponent } from './ruecklage/ruecklage-list/ruecklage-list.component';
 import { KategorieDeleteDialogComponent } from './kategorie/kategorie-delete-dialog/kategorie-delete-dialog.component';
+import { IconSelectDialogComponent } from './kategorie/icon-select-dialog/icon-select-dialog.component';
 
 
 
@@ -35,7 +36,8 @@ import { KategorieDeleteDialogComponent } from './kategorie/kategorie-delete-dia
     GutscheinEditComponent,
     RuecklageEditComponent,
     RuecklageListComponent,
-    KategorieDeleteDialogComponent
+    KategorieDeleteDialogComponent,
+    IconSelectDialogComponent
   ],
   imports: [
     CommonModule,

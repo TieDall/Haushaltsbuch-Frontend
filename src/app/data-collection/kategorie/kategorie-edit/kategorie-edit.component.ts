@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of, Subscription } from 'rxjs';
-import { map, catchError, finalize } from 'rxjs/operators';
+import { map, catchError, finalize, tap } from 'rxjs/operators';
+import { Icon } from 'src/app/shared/models/icon';
 import { Kategorie } from 'src/app/shared/models/kategorie';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { SpinnerOverlayService } from 'src/app/shared/services/spinner-overlay.service';
+import { IconSelectDialogComponent } from '../icon-select-dialog/icon-select-dialog.component';
 
 @Component({
   selector: 'app-kategorie-edit',
@@ -23,6 +25,7 @@ export class KategorieEditComponent implements OnInit, OnDestroy {
   public form: FormGroup;
 
   constructor(
+    private readonly dialog: MatDialog,
     private readonly formBuilder: FormBuilder,
     private readonly httpClient: HttpClient,
     private readonly snackBar: MatSnackBar,
@@ -54,6 +57,22 @@ export class KategorieEditComponent implements OnInit, OnDestroy {
         }
       ]
     });
+  }
+
+  public openIconDialog() {
+    this.subscriptions.add(
+      this.dialog
+        .open(IconSelectDialogComponent, { disableClose: true, maxWidth: '500px' })
+        .afterClosed()
+        .pipe(
+          tap((icon: string) => {
+            if (icon) {
+              this.form.get('icon').setValue(icon);
+            }
+          })
+        )
+        .subscribe()
+    );
   }
 
   public save() {
