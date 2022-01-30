@@ -19,7 +19,7 @@ export class DauerauftragGroupedListComponent implements OnInit, OnDestroy {
 
   private readonly subsciptions = new Subscription();
 
-  private readonly url = `${AppConfigService.appConfig.apiServer.url}Dauerauftrag/GetDauerauftraegeGrouped`;
+  private readonly url = `${AppConfigService.appConfig.apiServer.url}Dauerauftrag/GetGrouped`;
 
   public data: DauerauftragGrouped[] = [];
   public columns: string[] = ['status', 'kategorie', 'bezeichnung', 'betrag', 'actions'];

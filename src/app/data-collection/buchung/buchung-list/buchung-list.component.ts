@@ -8,6 +8,7 @@ import { Observable, of, Subscription } from 'rxjs';
 import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { Buchung } from 'src/app/shared/models/buchung';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { BackendEndpointsService } from 'src/app/shared/services/backend-endpoints.service';
 import { BtnBuchungService } from 'src/app/shared/services/btn-buchung.service';
 import { BuchungEditComponent } from '../buchung-edit/buchung-edit.component';
 
@@ -20,8 +21,6 @@ export class BuchungListComponent implements OnInit, OnDestroy {
 
   public subscriptions = new Subscription();
 
-  private readonly url = `${AppConfigService.appConfig.apiServer.url}Buchung`;
-
   public data: Buchung[] = [];
   public columns: string[] = ['buchungstag', 'kategorie', 'bezeichnung', 'betrag', 'actions'];
 
@@ -31,6 +30,7 @@ export class BuchungListComponent implements OnInit, OnDestroy {
   public loaded = false;
 
   constructor(
+    private readonly backendEndpointsService: BackendEndpointsService,
     private readonly httpClient: HttpClient,
     private readonly dialog: MatDialog,
     private readonly btnBuchungService: BtnBuchungService,
@@ -48,7 +48,7 @@ export class BuchungListComponent implements OnInit, OnDestroy {
   private loadData(year: number, month: number): Observable<Buchung[]> {
     this.loaded = false;
     this.data = [];
-    return this.httpClient.get<Buchung[]>(`${this.url}/GetByMonth/${year}/${month}`)
+    return this.httpClient.get<Buchung[]>(`${this.backendEndpointsService.buchungRoute}/GetByMonth/${year}/${month}`)
       .pipe(
         tap((buchungen: Buchung[]) => {
           this.data = buchungen.sort((a, b) => new Date(b.buchungstag).getTime() - new Date(a.buchungstag).getTime())
@@ -94,7 +94,7 @@ export class BuchungListComponent implements OnInit, OnDestroy {
   public delete(buchung: Buchung) {
     this.subscriptions.add(
       this.httpClient
-        .delete(`${this.url}/${buchung.id}`)
+        .delete(`${this.backendEndpointsService.buchungRoute}/${buchung.id}`)
         .pipe(
           switchMap(() => this.loadData(this.currentYear, this.currentMonth))
         )

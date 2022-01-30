@@ -9,7 +9,7 @@ import { Observable, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 import { Buchung } from 'src/app/shared/models/buchung';
 import { Kategorie } from 'src/app/shared/models/kategorie';
-import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { BackendEndpointsService } from 'src/app/shared/services/backend-endpoints.service';
 import { SpinnerOverlayService } from 'src/app/shared/services/spinner-overlay.service';
 
 @Component({
@@ -21,15 +21,13 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
 
   public subscriptions = new Subscription();
 
-  private readonly url = `${AppConfigService.appConfig.apiServer.url}Buchung`;
-  private readonly kategorieUrl = `${AppConfigService.appConfig.apiServer.url}Kategorie`;
-
   public form: FormGroup;
   public kategorienSelect: Kategorie[] = [];
 
   public showKategorieSpinner = true;
 
   constructor(
+    private readonly backendEndpointsService: BackendEndpointsService,
     private readonly formBuilder: FormBuilder,
     private readonly httpClient: HttpClient,
     private readonly snackBar: MatSnackBar,
@@ -53,7 +51,7 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
     if (!dontReset) {
       this.form.get('kategorie').reset();
     }
-    return this.httpClient.get<Kategorie[]>(this.kategorieUrl)
+    return this.httpClient.get<Kategorie[]>(this.backendEndpointsService.kategorieRoute)
       .pipe(
         tap((kategorien: Kategorie[]) => {
           this.kategorienSelect = kategorien
@@ -126,7 +124,7 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
 
     if (this.data?.id) {
       this.httpClient
-        .put(`${this.url}/${this.data.id}`, this.data)
+        .put(`${this.backendEndpointsService.buchungRoute}/${this.data.id}`, this.data)
         .pipe(
           map(() => true),
           catchError(() => of(false)),
@@ -142,7 +140,7 @@ export class BuchungEditComponent implements OnInit, OnDestroy {
         });
     } else {
       this.httpClient
-        .post(this.url, this.data)
+        .post(this.backendEndpointsService.buchungRoute, this.data)
         .pipe(
           map(() => true),
           catchError(() => of(false)),
